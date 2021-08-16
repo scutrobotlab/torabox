@@ -1,3 +1,6 @@
+const zlib = require("zlib");
+const CompressionPlugin = require("compression-webpack-plugin");
+
 module.exports = {
   transpileDependencies: [
     'vuetify'
@@ -14,4 +17,22 @@ module.exports = {
     : 'index.html',
 
   productionSourceMap: false,
+
+  configureWebpack: {
+    plugins: [
+      new CompressionPlugin({
+        filename: "[path][base].br",
+        algorithm: "brotliCompress",
+        test: /\.(js|css|svg)$/,
+        compressionOptions: {
+          params: {
+            [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
+          },
+        },
+      }),
+      new CompressionPlugin({
+        test: /\.(js|css|svg)$/,
+      }),
+    ]
+  },
 }
