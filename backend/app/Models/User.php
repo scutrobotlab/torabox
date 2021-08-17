@@ -2,42 +2,43 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable
+class User extends Model
 {
-    use HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    use HasFactory;
+    use SoftDeletes;
+    protected $table = 'users';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
     protected $fillable = [
+        'id',
+        'uuid',
         'name',
         'email',
-        'password',
     ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'deleted_at',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function privileges()
+    {
+        return $this->hasMany(Privilege::class);
+    }
+
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'privileges', 'user_id', 'group_id')->withPivot('privileges');
+    }
+
+    public function isGroupLeader($group_id)
+    {
+        return null != Privilege::where([
+            ['user_id', $this->id],
+            ['group_id', $group_id],
+            ['privilege', 2],
+        ])->first();
+    }
 }

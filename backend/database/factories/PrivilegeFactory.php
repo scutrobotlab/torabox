@@ -3,17 +3,19 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Models\Group;
+use App\Models\Privilege;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 
-class UserFactory extends Factory
+class PrivilegeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = Privilege::class;
 
     /**
      * Define the model's default state.
@@ -23,9 +25,9 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'uuid' => Str::uuid(),
-            'name' => $this->faker->name,
-            'email' => $this->faker->email,
+            'user_id' => User::inRandomOrder()->first()->id,
+            'group_id' => Group::inRandomOrder()->first()->id,
+            'privilege' => Arr::random([0, 1, 2]),
         ];
     }
 }
