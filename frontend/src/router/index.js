@@ -1,29 +1,88 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
+import UserLogin from "@/views/user/Login.vue";
+import UserLogout from "@/views/user/Logout.vue";
+import UserCallback from "@/views/user/Callback.vue";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: "/",
+    name: "Home",
+    component: Home,
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
+    path: "/user/login",
+    name: "UserLogin",
+    component: UserLogin,
+  },
+  {
+    path: "/user/logout",
+    name: "UserLogout",
+    component: UserLogout,
+  },
+  {
+    path: "/user/callback",
+    name: "UserCallback",
+    component: UserCallback,
+  },
+  {
+    path: "/dashboard",
+    component: () =>
+      import(
+        /* webpackChunkName: "dashboard-drawer" */
+        "../views/dashboard/Drawer.vue"
+      ),
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: "main",
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard-main" */
+            "@/views/dashboard/Main.vue"
+          ),
+      },
+      {
+        path: "/",
+        redirect: "main",
+      },
+    ],
+  },
+  {
+    path: "*",
+    redirect: "/dashboard/main",
+  },
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!localStorage.getItem("login")) {
+      next({
+        path: "/user/login",
+        query: { redirect: to.fullPath },
+      });
+    } else {
+      let redirect = from.query.redirect;
+      if (to.fullPath === redirect) {
+        next();
+      } else {
+        next({ path: redirect });
+      }
+    }
+  } else if (from.query.redirect && !to.query.redirect) {
+    next({ path: to.path, query: { redirect: from.query.redirect } });
+  } else {
+    next();
+  }
+});
+
+export default router;

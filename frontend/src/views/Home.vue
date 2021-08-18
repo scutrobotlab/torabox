@@ -1,18 +1,23 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-row class="fill-height" align="center" justify="center">
+    <ErrorAlert v-model="error" />
+    <v-progress-circular :size="70" :width="7" color="primary" indeterminate></v-progress-circular>
+  </v-row>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import errorMixin from "@/mixins/errorMixin.js";
+import { getUserSelfSession } from "@/api/user.js";
 
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
-}
+  mixins: [errorMixin],
+  async created() {
+    const success = await this.errorHandler(getUserSelfSession());
+    if (success) {
+      this.$router.push("/dashboard/main");
+    } else {
+      this.$router.push("/user/login");
+    }
+  },
+};
 </script>
