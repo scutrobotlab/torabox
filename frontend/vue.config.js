@@ -18,21 +18,24 @@ module.exports = {
 
   productionSourceMap: false,
 
-  configureWebpack: {
-    plugins: [
-      new CompressionPlugin({
-        filename: "[path][base].br",
-        algorithm: "brotliCompress",
-        test: /\.(js|css|svg)$/,
-        compressionOptions: {
-          params: {
-            [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
-          },
-        },
-      }),
-      new CompressionPlugin({
-        test: /\.(js|css|svg)$/,
-      }),
-    ]
-  },
+  configureWebpack:
+    process.env.NODE_ENV === "production"
+      ? {
+        plugins: [
+          new CompressionPlugin({
+            filename: "[path][base].br",
+            algorithm: "brotliCompress",
+            test: /\.(js|css|svg)$/,
+            compressionOptions: {
+              params: {
+                [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
+              },
+            },
+          }),
+          new CompressionPlugin({
+            test: /\.(js|css|svg)$/,
+          }),
+        ],
+      }
+      : {},
 }
