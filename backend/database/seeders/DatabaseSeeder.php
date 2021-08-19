@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             GroupSeeder::class,
             PrivilegeSeeder::class,
+            SubscriptionSeeder::class,
         ]);
     }
 }
