@@ -79,6 +79,7 @@ export default {
   }),
   async created() {
     await this.$store.dispatch("getUser");
+    await this.$store.dispatch("getGroups");
   },
   computed: {
     title() {

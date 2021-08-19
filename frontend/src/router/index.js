@@ -60,6 +60,49 @@ const routes = [
         },
       },
       {
+        path: "subscription",
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard-subscription-main" */
+            "@/views/dashboard/subscription/Main.vue"
+          ),
+        meta: {
+          title: "订阅类",
+          icon: "mdi-server",
+          msg: "管理订阅类物资",
+          color: "orange",
+        },
+        children: [
+          {
+            path: "",
+            meta: { title: "订阅列表" },
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-subscription-list" */
+                "@/views/dashboard/subscription/List.vue"
+              ),
+          },
+          {
+            path: "new",
+            meta: { title: "新增订阅" },
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-subscription-new" */
+                "@/views/dashboard/subscription/New.vue"
+              ),
+          },
+          {
+            path: ":id",
+            meta: { title: "订阅详情" },
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-subscription-index" */
+                "@/views/dashboard/subscription/Index.vue"
+              ),
+          },
+        ],
+      },
+      {
         path: "/",
         redirect: "main",
       },

@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import router from "@/router";
 import { getUserSelf, deleteUserSelfSession } from "@/api/user.js";
+import { getGroups } from "@/api/group.js";
 
 Vue.use(Vuex);
 
@@ -12,7 +13,9 @@ export default new Vuex.Store({
       email: "",
       name: "",
       avatar: "",
+      groups: null,
     },
+    groups: null,
   },
   mutations: {
     setUser(state, user) {
@@ -20,6 +23,9 @@ export default new Vuex.Store({
     },
     clearUser(state) {
       state.user = null;
+    },
+    setGroups(state, groups) {
+      state.groups = groups;
     },
   },
   actions: {
@@ -33,6 +39,11 @@ export default new Vuex.Store({
         commit("clearUser");
         localStorage.removeItem("login");
         router.push("/user/logout");
+      });
+    },
+    getGroups({ commit }) {
+      getGroups().then((resp) => {
+        commit("setGroups", resp);
       });
     },
   },
