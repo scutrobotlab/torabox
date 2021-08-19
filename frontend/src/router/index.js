@@ -46,6 +46,20 @@ const routes = [
           ),
       },
       {
+        path: "info",
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard-info" */
+            "@/views/dashboard/Info.vue"
+          ),
+        meta: {
+          title: "个人信息",
+          icon: "mdi-account-circle",
+          msg: "查看个人信息，包括姓名、身份和更多内容。",
+          color: "accent",
+        },
+      },
+      {
         path: "/",
         redirect: "main",
       },

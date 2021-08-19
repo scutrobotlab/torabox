@@ -1,5 +1,5 @@
 <template>
-  <v-card-text class="text-center">
+  <v-card-text>
     <v-select
       :items="users"
       item-text="name"
