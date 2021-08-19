@@ -54,8 +54,10 @@ class User extends Model
             ]
         );
 
+        $user->privileges()->delete();
+
         foreach ($json['groups'] as $group) {
-            $user->privileges()->updateOrCreate([
+            $user->privileges()->create([
                 'user_id' => $user->id,
                 'group_id' => $group['pivot']['group_id'],
                 'privilege' => $group['pivot']['power'],
