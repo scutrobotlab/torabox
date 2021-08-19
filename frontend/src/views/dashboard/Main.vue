@@ -1,5 +1,5 @@
 <template>
-  <div v-if="user">
+  <v-container class="mt-5" v-if="user">
     <ErrorAlert v-model="error" />
     <div class="d-block text-center">
       <v-avatar size="80" class="elevation-1">
@@ -25,7 +25,7 @@
         </v-card>
       </v-col>
     </v-row>
-  </div>
+  </v-container>
 </template>
 
 <script>

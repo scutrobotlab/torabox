@@ -1,16 +1,22 @@
 <template>
-  <v-row class="fill-height" align="center" justify="center">
-    <ErrorAlert v-model="error" />
-    <v-progress-circular :size="70" :width="7" color="primary" indeterminate></v-progress-circular>
-  </v-row>
+  <v-main>
+    <ErrorAlert critical v-model="error" />
+    <v-container class="fill-height" fluid>
+      <WaitProgress />
+    </v-container>
+  </v-main>
 </template>
 
 <script>
+import WaitProgress from "@/components/WaitProgress.vue";
 import errorMixin from "@/mixins/errorMixin.js";
 import { getUserSelfSession } from "@/api/user.js";
 
 export default {
   mixins: [errorMixin],
+  components: {
+    WaitProgress,
+  },
   async created() {
     const success = await this.errorHandler(getUserSelfSession());
     if (success) {

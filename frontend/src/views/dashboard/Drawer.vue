@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-main>
     <v-app-bar app dark color="primary">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
@@ -64,12 +64,8 @@
         </v-card-actions>
       </template>
     </v-navigation-drawer>
-    <v-main>
-      <v-container fluid class="mt-3">
-        <router-view />
-      </v-container>
-    </v-main>
-  </div>
+    <router-view />
+  </v-main>
 </template>
 
 <script>
