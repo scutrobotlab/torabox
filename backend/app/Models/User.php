@@ -34,6 +34,33 @@ class User extends Model
         return $this->belongsToMany(Group::class, 'privileges', 'user_id', 'group_id')->withPivot('privilege');
     }
 
+    public function managedGroups()
+    {
+        return $this->belongsToMany(Group::class, 'privileges', 'user_id', 'group_id')->withPivot('privilege')->wherePivot('privilege', 2);
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
+    public function isGroupUser($group_id)
+    {
+        return null != Privilege::where([
+            ['user_id', $this->id],
+            ['group_id', $group_id],
+        ])->first();
+    }
+
+    public function isGroupMember($group_id)
+    {
+        return null != Privilege::where([
+            ['user_id', $this->id],
+            ['group_id', $group_id],
+            ['privilege', 1],
+        ])->first();
+    }
+
     public function isGroupLeader($group_id)
     {
         return null != Privilege::where([

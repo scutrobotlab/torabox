@@ -26,11 +26,16 @@ class Group extends Model
 
     public function members()
     {
-        return $this->belongsToMany(User::class, 'privileges', 'group_id', 'user_id')->withPivot('privilege')->wherePivotIn('privilege', [1, 2]);
+        return $this->belongsToMany(User::class, 'privileges', 'group_id', 'user_id')->withPivot('privilege')->wherePivot('privilege', 1);
     }
 
     public function leaders()
     {
         return $this->belongsToMany(User::class, 'privileges', 'group_id', 'user_id')->withPivot('privilege')->wherePivot('privilege', 2);
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
     }
 }
