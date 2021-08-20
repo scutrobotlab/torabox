@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\UserMid;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -17,24 +18,24 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        if ($request->has('code')) {
-            $resp = User::oauth($request->code);
-            if ($resp['success']) {
-                $user = User::storeOauth($resp['message']);
-                session(['user' => $user]);
-                return response()->json([
-                    'user' => $user,
-                ]);
-            } else {
-                return response()->json([
-                    'message' => $resp['message'],
-                ], 500);
-            }
+        if (!$request->has('code')) {
+            return response()->json([
+                'message' => 'Failed',
+            ], 400);
         }
 
+        $resp = User::newOauthUserinfo($request->code);
+        if (!$resp['success']) {
+            return response()->json([
+                'message' => $resp['message'],
+            ], 500);
+        }
+        $user = $resp['message'];
+
+        session(['user' => $user]);
         return response()->json([
-            'message' => 'Failed',
-        ], 400);
+            'user' => $user,
+        ]);
     }
 
     public function indexSelf()
@@ -48,6 +49,24 @@ class UserController extends Controller
     {
         return response()->json([
             'user' => User::findOrFail($id),
+        ]);
+    }
+
+    public function updateSelf()
+    {
+        $uuid = UserMid::$user->uuid;
+        $refresh_token = UserMid::$user->refresh_token;
+        $resp = User::updateOauthUserinfo($uuid, $refresh_token);
+        if (!$resp['success']) {
+            return response()->json([
+                'message' => $resp['message'],
+            ], 500);
+        }
+        $user = $resp['message'];
+
+        session(['user' => $user]);
+        return response()->json([
+            'user' => $user,
         ]);
     }
 
@@ -67,7 +86,7 @@ class UserController extends Controller
             ], 404);
         }
         $json = User::fakeOauth($id);
-        $user = User::storeOauth($json);
+        $user = User::storeOauthUserinfo($json, Str::random(80));
         session(['user' => $user]);
         return response()->json([
             'user' => $user,

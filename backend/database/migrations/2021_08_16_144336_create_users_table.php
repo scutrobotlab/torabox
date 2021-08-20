@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->uuid('uuid')->unique();
             $table->string('name', 32);
             $table->string('email', 64)->unique();
+            $table->string('refresh_token', 80)->unique();
             $table->softDeletes();
             $table->timestamps();
         });

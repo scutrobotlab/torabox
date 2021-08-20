@@ -26,6 +26,7 @@ class UserFactory extends Factory
             'uuid' => Str::uuid(),
             'name' => $this->faker->name,
             'email' => $this->faker->email,
+            'refresh_token' => Str::random(80),
         ];
     }
 }

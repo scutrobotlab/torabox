@@ -36,6 +36,7 @@ Route::middleware(UserMid::class)->group(function () {
         Route::get('/{id}', [UserController::class, 'index']);
         Route::prefix('/self')->group(function () {
             Route::get('/', [UserController::class, 'indexSelf']);
+            Route::put('/', [UserController::class, 'updateSelf']);
             Route::delete('/session', [UserController::class, 'logout']);
         });
     });
