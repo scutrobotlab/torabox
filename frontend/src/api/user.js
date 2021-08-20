@@ -27,6 +27,11 @@ export async function getUserSelf() {
   return resp.user;
 }
 
+export async function putUserSelf() {
+  const resp = await fetchApi("/api/users/self", "PUT");
+  return resp.user;
+}
+
 export async function getUserIndex(id) {
   const resp = await fetchApi("/api/users/" + id);
   return resp.user;

@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import router from "@/router";
-import { getUserSelf, deleteUserSelfSession } from "@/api/user.js";
+import { getUserSelf, putUserSelf, deleteUserSelfSession } from "@/api/user.js";
 import { getGroups } from "@/api/group.js";
 
 Vue.use(Vuex);
@@ -31,6 +31,11 @@ export default new Vuex.Store({
   actions: {
     getUser({ commit }) {
       getUserSelf().then((resp) => {
+        commit("setUser", resp);
+      });
+    },
+    updateUser({ commit }) {
+      putUserSelf().then((resp) => {
         commit("setUser", resp);
       });
     },
