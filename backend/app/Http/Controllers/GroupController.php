@@ -17,7 +17,7 @@ class GroupController extends Controller
     public function index($id)
     {
         return response()->json([
-            'groups' => Group::findOrFail($id),
+            'group' => Group::findOrFail($id),
         ]);
     }
 

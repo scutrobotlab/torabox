@@ -7,7 +7,7 @@ export async function getGroups() {
 
 export async function getGroupIndex(id) {
   const resp = await fetchApi("/api/groups/" + id);
-  return resp.groups;
+  return resp.group;
 }
 
 export async function getGroupIndexUsers(id) {
