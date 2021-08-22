@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\ConsumableController;
+use App\Http\Controllers\ConsumableApplicationController;
+use App\Http\Controllers\ConsumablePurchaseController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Middleware\FakeMid;
 use App\Http\Middleware\UserMid;
@@ -60,6 +63,37 @@ Route::middleware(UserMid::class)->group(function () {
             Route::post('/', [SubscriptionController::class, 'store']);
             Route::put('/{id}', [SubscriptionController::class, 'update']);
         });
+    });
+
+    Route::prefix('/consumables')->group(function () {
+        Route::get('/', [ConsumableController::class, 'list']);
+        Route::prefix('/{id}')->group(function () {
+            Route::get('/', [ConsumableController::class, 'index']);
+            Route::get('/edit', [ConsumableController::class, 'edit']);
+            Route::delete('/', [ConsumableController::class, 'destroy']);
+            Route::get('/applications', [ConsumableController::class, 'indexApplications']);
+            Route::get('/purchases', [ConsumableController::class, 'indexPurchases']);
+            Route::get('/approvers', [ConsumableController::class, 'indexApprovers']);
+        });
+        Route::middleware(EnsureUserInGroup::class)->group(function () {
+            Route::post('/', [ConsumableController::class, 'store']);
+        });
+    });
+
+    Route::prefix('/consumable_applications')->group(function () {
+        Route::get('/', [ConsumableApplicationController::class, 'list']);
+        Route::post('/', [ConsumableApplicationController::class, 'store']);
+        Route::get('/{id}', [ConsumableApplicationController::class, 'index']);
+        Route::get('/{id}/edit', [ConsumableApplicationController::class, 'edit']);
+        Route::put('/{id}', [ConsumableApplicationController::class, 'update']);
+        Route::delete('/{id}', [ConsumableApplicationController::class, 'destroy']);
+    });
+
+    Route::prefix('/consumable_purchases')->group(function () {
+        Route::get('/', [ConsumablePurchaseController::class, 'list']);
+        Route::post('/', [ConsumablePurchaseController::class, 'store']);
+        Route::get('/{id}', [ConsumablePurchaseController::class, 'index']);
+        Route::delete('/{id}', [ConsumableApplicationController::class, 'destroy']);
     });
 });
 
