@@ -59,6 +59,79 @@ const routes = [
           color: "accent",
         },
       },
+
+      {
+        path: "consumable",
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard-consumable-main" */
+            "@/views/dashboard/consumable/Main.vue"
+          ),
+        meta: {
+          title: "消耗品",
+          icon: "mdi-camera-iris",
+          msg: "管理消耗品物资",
+          color: "green",
+        },
+        children: [
+          {
+            path: "",
+            meta: { title: "消耗品列表" },
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-consumable-list" */
+                "@/views/dashboard/consumable/List.vue"
+              ),
+          },
+          {
+            path: "new",
+            meta: { title: "新增消耗品" },
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-consumable-new" */
+                "@/views/dashboard/consumable/New.vue"
+              ),
+          },
+          {
+            path: ":id",
+            meta: { title: "消耗品详情" },
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-consumable-index" */
+                "@/views/dashboard/consumable/Index.vue"
+              ),
+            children: [
+              {
+                path: "",
+                meta: { title: "消耗品详情" },
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-consumable-index-main" */
+                    "@/views/dashboard/consumable/IndexMain.vue"
+                  ),
+              },
+              {
+                path: "application",
+                meta: { title: "消耗品申请记录" },
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-consumable-application" */
+                    "@/views/dashboard/consumable/Application.vue"
+                  ),
+              },
+              {
+                path: "purchase",
+                meta: { title: "消耗品购买记录" },
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-consumable-purchase" */
+                    "@/views/dashboard/consumable/Purchase.vue"
+                  ),
+              },
+            ],
+          },
+        ],
+      },
       {
         path: "subscription",
         component: () =>
@@ -67,15 +140,15 @@ const routes = [
             "@/views/dashboard/subscription/Main.vue"
           ),
         meta: {
-          title: "订阅类",
+          title: "订阅品",
           icon: "mdi-server",
-          msg: "管理订阅类物资",
+          msg: "管理订阅品物资",
           color: "orange",
         },
         children: [
           {
             path: "",
-            meta: { title: "订阅列表" },
+            meta: { title: "订阅品列表" },
             component: () =>
               import(
                 /* webpackChunkName: "dashboard-subscription-list" */
@@ -84,7 +157,7 @@ const routes = [
           },
           {
             path: "new",
-            meta: { title: "新增订阅" },
+            meta: { title: "新增订阅品" },
             component: () =>
               import(
                 /* webpackChunkName: "dashboard-subscription-new" */
@@ -93,7 +166,7 @@ const routes = [
           },
           {
             path: ":id",
-            meta: { title: "订阅详情" },
+            meta: { title: "订阅品详情" },
             component: () =>
               import(
                 /* webpackChunkName: "dashboard-subscription-index" */
