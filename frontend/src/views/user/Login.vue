@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     async login() {
-      const url = createUserOAuthURL(this.config);
+      const url = createUserOAuthURL(this.config, this.$route.query.redirect);
       document.location.replace(url);
     },
   },

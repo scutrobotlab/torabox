@@ -21,7 +21,11 @@ export default {
     const user = await this.errorHandler(postUserSelfSession(this.$route.query.code));
     if (user) {
       localStorage.setItem("login", true);
-      this.$router.push("/dashboard/main");
+      if (this.$route.query.state) {
+        this.$router.push(this.$route.query.state);
+      } else {
+        this.$router.push("/dashboard/main");
+      }
     }
   },
 };
