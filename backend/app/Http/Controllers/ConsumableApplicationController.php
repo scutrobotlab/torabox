@@ -14,7 +14,7 @@ class ConsumableApplicationController extends Controller
     public function list()
     {
         return response()->json([
-            'consumable_applications' => ConsumableApplication::all(),
+            'consumable_applications' => ConsumableApplication::all()->load(['consumable', 'applicant', 'approver']),
         ]);
     }
 
@@ -64,7 +64,7 @@ class ConsumableApplicationController extends Controller
     {
         $consumable_application = ConsumableApplication::findOrFail($id);
         return response()->json([
-            'access' => $consumable_application->user_id == UserMid::$user->id || UserMid::$user->isGroupLeader($consumable_application->group_id),
+            'access' => $consumable_application->approver_id == UserMid::$user->id,
         ]);
     }
 
@@ -72,16 +72,22 @@ class ConsumableApplicationController extends Controller
     {
         $consumable_application = ConsumableApplication::findOrFail($id);
 
-        if (!$consumable_application->canBeApprovedBy(UserMid::$user->id)) {
+        if ($consumable_application->approver_id != UserMid::$user->id) {
             return response()->json([
                 'message' => '需要审批人执行操作',
             ], 403);
         }
 
-        if (!Arr::exists([-1, 1], $request->status)) {
+        if ($consumable_application->status != 0) {
+            return response()->json([
+                'message' => '已审批',
+            ], 400);
+        }
+
+        if ($request->status != -1 && $request->status != 1) {
             return response()->json([
                 'message' => '审批结果错误',
-            ], 403);
+            ], 400);
         }
 
         if ($request->status == 1 && $consumable_application->consumable->number < $consumable_application->number) {

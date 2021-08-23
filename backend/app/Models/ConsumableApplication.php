@@ -55,11 +55,4 @@ class ConsumableApplication extends Model
     {
         $this->consumable->increment('number', $this->number);
     }
-
-    public function canBeApprovedBy($applicant_id)
-    {
-        return null != $this->consumable->approvers::where([
-            'id' => $applicant_id,
-        ])->first();
-    }
 }
