@@ -33,7 +33,7 @@ const routes = [
     component: () =>
       import(
         /* webpackChunkName: "dashboard-drawer" */
-        "../views/dashboard/Drawer.vue"
+        "@/views/dashboard/Drawer.vue"
       ),
     meta: { requiresAuth: true },
     children: [
@@ -58,6 +58,50 @@ const routes = [
           msg: "查看个人信息，包括姓名、身份和更多内容。",
           color: "accent",
         },
+      },
+
+      {
+        path: "application",
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard-application-main" */
+            "@/views/dashboard/application/Main.vue"
+          ),
+        meta: {
+          title: "申请列表",
+          icon: "mdi-list-status",
+          msg: "查看物资的申请",
+          color: "secondary",
+        },
+        children: [
+          {
+            path: "",
+            meta: { title: "申请列表" },
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-application-list" */
+                "@/views/dashboard/application/List.vue"
+              ),
+          },
+          {
+            path: "consumable",
+            meta: { title: "消耗品申请列表" },
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-application-consumable-list" */
+                "@/views/dashboard/application/ConsumableList.vue"
+              ),
+          },
+          {
+            path: "consumable/:id",
+            meta: { title: "消耗品申请详情" },
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-application-consumable-index" */
+                "@/views/dashboard/application/ConsumableIndex.vue"
+              ),
+          },
+        ],
       },
 
       {
