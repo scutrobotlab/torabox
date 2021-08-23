@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\ImmovableController;
+use App\Http\Controllers\ImmovableApplicationController;
+use App\Http\Controllers\ImmovableKindController;
 use App\Http\Controllers\ConsumableController;
 use App\Http\Controllers\ConsumableApplicationController;
 use App\Http\Controllers\ConsumablePurchaseController;
@@ -52,6 +55,42 @@ Route::middleware(UserMid::class)->group(function () {
             Route::get('/members', [GroupController::class, 'indexMemberList']);
             Route::get('/leaders', [GroupController::class, 'indexLeaderList']);
         });
+    });
+
+    Route::prefix('/immovables')->group(function () {
+        Route::get('/', [ImmovableController::class, 'list']);
+        Route::prefix('/{id}')->group(function () {
+            Route::get('/', [ImmovableController::class, 'index']);
+            Route::get('/edit', [ImmovableController::class, 'edit']);
+            Route::delete('/', [ImmovableController::class, 'destroy']);
+            Route::get('/applications', [ImmovableController::class, 'indexApplications']);
+            Route::get('/approvers', [ImmovableController::class, 'indexApprovers']);
+        });
+        Route::middleware(EnsureUserInGroup::class)->group(function () {
+            Route::post('/', [ImmovableController::class, 'store']);
+        });
+    });
+
+    Route::prefix('/immovable_kinds')->group(function () {
+        Route::get('/', [ImmovableKindController::class, 'list']);
+        Route::prefix('/{id}')->group(function () {
+            Route::get('/', [ImmovableKindController::class, 'index']);
+            Route::get('/edit', [ImmovableKindController::class, 'edit']);
+            Route::delete('/', [ImmovableKindController::class, 'destroy']);
+            Route::get('/immovables', [ImmovableKindController::class, 'indexImmovableList']);
+        });
+        Route::middleware(EnsureUserInGroup::class)->group(function () {
+            Route::post('/', [ImmovableKindController::class, 'store']);
+        });
+    });
+
+    Route::prefix('/immovable_applications')->group(function () {
+        Route::get('/', [ImmovableApplicationController::class, 'list']);
+        Route::post('/', [ImmovableApplicationController::class, 'store']);
+        Route::get('/{id}', [ImmovableApplicationController::class, 'index']);
+        Route::get('/{id}/edit', [ImmovableApplicationController::class, 'edit']);
+        Route::put('/{id}', [ImmovableApplicationController::class, 'update']);
+        Route::delete('/{id}', [ImmovableApplicationController::class, 'destroy']);
     });
 
     Route::prefix('/subscriptions')->group(function () {
