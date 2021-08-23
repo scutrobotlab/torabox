@@ -1,35 +1,33 @@
 <template>
   <v-container>
-    <v-card flat>
-      <v-toolbar dark color="primary">
-        <v-btn icon dark @click="$router.push('/dashboard/consumable/' + $route.params.id)">
-          <v-icon>mdi-arrow-left</v-icon>
-        </v-btn>
-        <v-toolbar-title v-if="consumable">{{ consumable.name }}购买记录</v-toolbar-title>
-        <v-spacer></v-spacer>
-      </v-toolbar>
+    <ErrorAlert v-model="error" />
+    <WaitProgress v-if="loading" class="ma-7" />
+    <v-list v-else>
+      <v-list-item>
+        <v-list-item-action @click="$router.push('/dashboard/consumable/' + $route.params.id)">
+          <v-icon>mdi-chevron-left</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>
+            {{ consumable.name }}购买记录 剩余：{{ consumable.number }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
 
-      <v-card-text>
-        <v-container>
-          <ErrorAlert v-model="error" />
-          <WaitProgress v-if="loading" class="ma-7" />
-          <v-list v-else two-line>
-            <v-subheader>剩余：{{ consumable.number }}</v-subheader>
-            <v-list-item v-for="purchase in consumable.purchases" :key="purchase.id">
-              <v-list-item-content>
-                <v-list-item-title v-text="purchase.user.name"></v-list-item-title>
-                <v-list-item-subtitle>
-                  {{ "购买数量：" + purchase.number }}
-                </v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-container>
-      </v-card-text>
-    </v-card>
+      <v-list-item v-for="purchase in consumable.purchases" :key="purchase.id">
+        <v-list-item-content>
+          <v-list-item-title v-text="purchase.user.name"></v-list-item-title>
+          <v-list-item-subtitle>
+            {{ "购买数量：" + purchase.number }}
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+
     <v-btn
-      class="mb-7 mr-3"
+      class="mb-15 mr-3"
       color="secondary"
+      fixed
       dark
       absolute
       bottom

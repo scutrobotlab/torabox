@@ -10,56 +10,54 @@
       </v-row>
     </v-alert>
     <WaitProgress v-else-if="loading" class="ma-7" />
-    <v-card v-else>
-      <v-toolbar dark color="primary">
-        <v-btn icon dark @click="$router.go(-1)">
-          <v-icon>mdi-arrow-left</v-icon>
-        </v-btn>
-        <v-toolbar-title v-if="consumable_application">
-          {{ consumable_application.consumable.name }}申请
-        </v-toolbar-title>
+    <div v-else>
+      <v-list>
+        <v-list-item>
+          <v-list-item-action @click="$router.go(-1)">
+            <v-icon>mdi-chevron-left</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ consumable_application.consumable.name }}申请</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
 
-        <v-spacer></v-spacer>
-      </v-toolbar>
-      <v-card-text>
-        <v-container>
-          <v-list>
-            <v-list-item v-if="consumable_application.status == 0">
-              <v-list-item-content>
-                <v-list-item-title>
-                  剩余数量：{{ consumable_application.consumable.number }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-content>
-                <v-list-item-title>申请数量：{{ consumable_application.number }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-content>
-                <v-list-item-title>
-                  申请人：{{ consumable_application.applicant.name }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-content>
-                <v-list-item-title>
-                  审核人：{{ consumable_application.approver.name }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
+        <v-list-item v-if="consumable_application.status == 0">
+          <v-list-item-content>
+            <v-list-item-title>
+              剩余数量：{{ consumable_application.consumable.number }}
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>申请数量：{{ consumable_application.number }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>
+              申请人：{{ consumable_application.applicant.name }}
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>
+              审核人：{{ consumable_application.approver.name }}
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item>
           <v-textarea
             :disabled="consumable_application.status != 0"
             label="描述"
             v-model="consumable_application.description"
           ></v-textarea>
-        </v-container>
-        <v-card-actions v-if="access && consumable_application.status == 0">
-          <v-spacer></v-spacer>
+        </v-list-item>
+        <v-list-item v-if="access && consumable_application.status == 0">
+          <v-spacer />
           <v-btn
+            class="mr-3"
             color="primary"
             :loading="updating"
             :disabled="updating"
@@ -79,15 +77,15 @@
           >
             拒绝
           </v-btn>
-        </v-card-actions>
-        <v-card-text v-else-if="consumable_application.status == 1" class="green--text">
+        </v-list-item>
+        <v-list-item v-else-if="consumable_application.status == 1" class="green--text">
           <v-icon large color="success">mdi-check-circle-outline</v-icon> 已同意
-        </v-card-text>
-        <v-card-text v-else-if="consumable_application.status == -1" class="red--text">
+        </v-list-item>
+        <v-list-item v-else-if="consumable_application.status == -1" class="red--text">
           <v-icon large color="error">mdi-close-circle-outline</v-icon> 已拒绝
-        </v-card-text>
-      </v-card-text>
-    </v-card>
+        </v-list-item>
+      </v-list>
+    </div>
   </v-container>
 </template>
 

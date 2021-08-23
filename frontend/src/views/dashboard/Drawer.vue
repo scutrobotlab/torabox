@@ -64,7 +64,7 @@
         </v-card-actions>
       </template>
     </v-navigation-drawer>
-    <router-view />
+    <router-view class="mt-3" />
   </v-main>
 </template>
 

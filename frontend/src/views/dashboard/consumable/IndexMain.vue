@@ -10,72 +10,65 @@
       </v-row>
     </v-alert>
     <WaitProgress v-else-if="loading" class="ma-7" />
-    <v-card v-else>
-      <v-toolbar dark color="primary">
-        <v-btn icon dark @click="$router.push('/dashboard/consumable')">
-          <v-icon>mdi-arrow-left</v-icon>
-        </v-btn>
-        <v-toolbar-title v-if="consumable">{{ consumable.name }}</v-toolbar-title>
-        <v-spacer></v-spacer>
-      </v-toolbar>
-      <v-card-text>
-        <v-container>
-          <v-list>
-            <v-subheader>基本信息</v-subheader>
-            <v-list-item>
-              <v-list-item-content>
-                <v-list-item-title>
-                  {{ consumable.need_approval ? "需要审批" : "无需审批" }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-content>
-                <v-list-item-title>剩余数量：{{ consumable.number }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-content>
-                <v-list-item-title>负责人：{{ consumable.user.name }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-content>
-                <v-list-item-title>归属：{{ consumable.group.name }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-content>
-                <v-list-item-title>描述：{{ consumable.description }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-          <v-list>
-            <v-subheader>相关记录</v-subheader>
-            <v-list-item :to="`/dashboard/consumable/${$route.params.id}/application`">
-              <v-list-item-content>
-                <v-list-item-title>申请记录</v-list-item-title>
-              </v-list-item-content>
-              <v-list-item-action>
-                <v-icon>mdi-chevron-right</v-icon>
-              </v-list-item-action>
-            </v-list-item>
-            <v-list-item :to="`/dashboard/consumable/${$route.params.id}/purchase`">
-              <v-list-item-content>
-                <v-list-item-title>购买记录</v-list-item-title>
-              </v-list-item-content>
-              <v-list-item-action>
-                <v-icon>mdi-chevron-right</v-icon>
-              </v-list-item-action>
-            </v-list-item>
-          </v-list>
-        </v-container>
-        <v-card-actions v-if="access">
-          <v-spacer></v-spacer>
-          <v-btn color="error" v-if="access" dark block @click="dialog = true">删除</v-btn>
-        </v-card-actions>
-      </v-card-text>
 
+    <div v-else>
+      <v-list>
+        <v-list-item>
+          <v-list-item-action @click="$router.push('/dashboard/consumable')">
+            <v-icon>mdi-chevron-left</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ consumable.name }}基本信息</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>
+              {{ consumable.need_approval ? "需要审批" : "无需审批" }}
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>剩余数量：{{ consumable.number }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>负责人：{{ consumable.user.name }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>归属：{{ consumable.group.name }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>描述：{{ consumable.description }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-list>
+        <v-subheader>相关记录</v-subheader>
+        <v-list-item :to="`/dashboard/consumable/${$route.params.id}/application`">
+          <v-list-item-content>
+            <v-list-item-title>申请记录</v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-icon>mdi-chevron-right</v-icon>
+          </v-list-item-action>
+        </v-list-item>
+        <v-list-item :to="`/dashboard/consumable/${$route.params.id}/purchase`">
+          <v-list-item-content>
+            <v-list-item-title>购买记录</v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-icon>mdi-chevron-right</v-icon>
+          </v-list-item-action>
+        </v-list-item>
+      </v-list>
+      <v-btn color="error" v-if="access" dark block @click="dialog = true">删除</v-btn>
       <v-dialog v-model="dialog" persistent max-width="290">
         <v-card v-if="consumable">
           <v-card-title> 确定删除{{ consumable.name }}？ </v-card-title>
@@ -86,7 +79,7 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-    </v-card>
+    </div>
   </v-container>
 </template>
 
