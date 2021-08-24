@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import router from "@/router";
 import { getUserSelf, putUserSelf, deleteUserSelfSession } from "@/api/user.js";
 import { getGroups } from "@/api/group.js";
+import { getImmovableKinds } from "@/api/immovable_kind.js";
 
 Vue.use(Vuex);
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
       groups: null,
     },
     groups: null,
+    kinds: null,
   },
   mutations: {
     setUser(state, user) {
@@ -26,6 +28,9 @@ export default new Vuex.Store({
     },
     setGroups(state, groups) {
       state.groups = groups;
+    },
+    setKinds(state, kinds) {
+      state.kinds = kinds;
     },
   },
   actions: {
@@ -49,6 +54,11 @@ export default new Vuex.Store({
     getGroups({ commit }) {
       getGroups().then((resp) => {
         commit("setGroups", resp);
+      });
+    },
+    getKinds({ commit }) {
+      getImmovableKinds().then((resp) => {
+        commit("setKinds", resp);
       });
     },
   },
