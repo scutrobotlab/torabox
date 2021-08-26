@@ -8,6 +8,7 @@
             hide-details
             prepend-icon="mdi-magnify"
             single-line
+            clearable
           ></v-text-field>
           <v-spacer></v-spacer>
           <v-menu :close-on-content-click="false" offset-y transition="slide-y-transition">
@@ -58,12 +59,24 @@ export default {
     ListSubscription,
   },
   data: () => ({
-    keyword: "",
     showImmovable: true,
     showConsumable: true,
     showSubscription: true,
   }),
   computed: {
+    keyword: {
+      get() {
+        return this.$route.query.q || "";
+      },
+      set(value) {
+        this.$router.replace({
+          query: {
+            ...this.$route.query,
+            q: value,
+          },
+        });
+      },
+    },
     searchImmovables() {
       return this.$store.getters.searchImmovables(this.keyword).slice(0, 100);
     },
