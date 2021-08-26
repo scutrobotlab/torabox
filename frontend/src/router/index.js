@@ -312,6 +312,31 @@ const routes = [
           },
         ],
       },
+      {
+        path: "account",
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard-account-main" */
+            "@/views/dashboard/account/Main.vue"
+          ),
+        meta: {
+          title: "我的",
+          icon: "mdi-account",
+        },
+        children: [
+          {
+            path: "",
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-account" */
+                "@/views/dashboard/account/Info.vue"
+              ),
+            meta: {
+              title: "我的",
+            },
+          },
+        ],
+      },
     ],
   },
 ];
