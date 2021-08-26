@@ -3,7 +3,7 @@
     <v-fade-transition>
       <v-card v-show="show">
         <v-toolbar v-if="immovable">
-          <v-btn icon @click="$router.push('/dashboard/resource/immovable')">
+          <v-btn icon @click="$router.go(-1)">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
           <v-toolbar-title>{{ immovable.name }}</v-toolbar-title>

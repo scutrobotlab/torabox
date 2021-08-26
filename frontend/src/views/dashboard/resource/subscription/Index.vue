@@ -3,7 +3,7 @@
     <v-fade-transition>
       <v-card v-show="show">
         <v-toolbar>
-          <v-btn icon @click="$router.push('/dashboard/resource/subscription')">
+          <v-btn icon @click="$router.go(-1)">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
           <v-toolbar-title v-if="subscription">{{ subscription.name }}</v-toolbar-title>
