@@ -1,21 +1,7 @@
 <template>
   <v-container>
     <v-fade-transition>
-      <v-list two-line v-if="!loading">
-        <v-list-item
-          v-for="immovable in immovables"
-          :key="immovable.id"
-          :to="`/dashboard/resource/immovable/${immovable.id}`"
-        >
-          <v-list-item-content>
-            <v-list-item-title v-text="immovable.name"></v-list-item-title>
-            <v-list-item-subtitle>{{ immovable.status_text }}</v-list-item-subtitle>
-          </v-list-item-content>
-          <v-list-item-action>
-            <v-icon>mdi-chevron-right</v-icon>
-          </v-list-item-action>
-        </v-list-item>
-      </v-list>
+      <ListItem :immovables="immovables" v-if="!loading" />
     </v-fade-transition>
 
     <v-fab-transition>
@@ -50,6 +36,7 @@
 </template>
 
 <script>
+import ListItem from "@/components/immovable/ListItem.vue";
 import NewKindDialog from "@/components/immovable/NewKindDialog.vue";
 import NewDialog from "@/components/immovable/NewDialog.vue";
 import errorMixin from "@/mixins/errorMixin.js";
@@ -57,6 +44,7 @@ import errorMixin from "@/mixins/errorMixin.js";
 export default {
   mixins: [errorMixin],
   components: {
+    ListItem,
     NewKindDialog,
     NewDialog,
   },

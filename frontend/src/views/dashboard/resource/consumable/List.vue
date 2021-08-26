@@ -1,21 +1,7 @@
 <template>
   <v-container>
     <v-fade-transition>
-      <v-list two-line v-if="!loading">
-        <v-list-item
-          v-for="consumable in consumables"
-          :key="consumable.id"
-          :to="`/dashboard/resource/consumable/${consumable.id}`"
-        >
-          <v-list-item-content>
-            <v-list-item-title v-text="consumable.name"></v-list-item-title>
-            <v-list-item-subtitle> 剩余数量： {{ consumable.number }} </v-list-item-subtitle>
-          </v-list-item-content>
-          <v-list-item-action>
-            <v-icon>mdi-chevron-right</v-icon>
-          </v-list-item-action>
-        </v-list-item>
-      </v-list>
+      <ListItem :consumables="consumables" v-if="!loading" />
     </v-fade-transition>
 
     <NewDialog />
@@ -23,6 +9,7 @@
 </template>
 
 <script>
+import ListItem from "@/components/consumable/ListItem.vue";
 import NewDialog from "@/components/consumable/NewDialog.vue";
 import errorMixin from "@/mixins/errorMixin.js";
 
@@ -30,6 +17,7 @@ export default {
   mixins: [errorMixin],
   components: {
     NewDialog,
+    ListItem,
   },
   computed: {
     consumables() {
