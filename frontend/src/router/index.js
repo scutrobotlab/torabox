@@ -149,6 +149,30 @@ const routes = [
               title: "订阅类",
               icon: "mdi-server",
             },
+            children: [
+              {
+                path: "",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-resource-subscription-list" */
+                    "@/views/dashboard/resource/subscription/List.vue"
+                  ),
+                meta: {
+                  title: "订阅类",
+                },
+              },
+              {
+                path: ":id",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-resource-subscription-index" */
+                    "@/views/dashboard/resource/subscription/Index.vue"
+                  ),
+                meta: {
+                  title: "订阅类详情",
+                },
+              },
+            ],
           },
         ],
       },

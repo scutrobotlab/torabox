@@ -5,6 +5,7 @@ import { getUserSelf, putUserSelf, deleteUserSelfSession } from "@/api/user.js";
 import { getGroups } from "@/api/group.js";
 import { getImmovableKinds } from "@/api/immovable_kind.js";
 import { getConsumables } from "@/api/consumable.js";
+import { getSubscriptions } from "@/api/subscription.js";
 
 Vue.use(Vuex);
 
@@ -20,6 +21,7 @@ export default new Vuex.Store({
     groups: null,
     kinds: null,
     consumables: null,
+    subscriptions: null,
   },
   mutations: {
     setUser(state, user) {
@@ -36,6 +38,9 @@ export default new Vuex.Store({
     },
     setConsumables(state, consumables) {
       state.consumables = consumables;
+    },
+    setSubscriptions(state, subscriptions) {
+      state.subscriptions = subscriptions;
     },
   },
   actions: {
@@ -69,6 +74,11 @@ export default new Vuex.Store({
     getConsumables({ commit }) {
       getConsumables().then((resp) => {
         commit("setConsumables", resp);
+      });
+    },
+    getSubscriptions({ commit }) {
+      getSubscriptions().then((resp) => {
+        commit("setSubscriptions", resp);
       });
     },
   },
