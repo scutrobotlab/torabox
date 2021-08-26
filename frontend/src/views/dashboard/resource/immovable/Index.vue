@@ -61,7 +61,7 @@
           </v-list-item>
           <v-list-item>
             <v-list-item-content>
-              <v-list-item-title>{{ showStatus(immovable.status) }}</v-list-item-title>
+              <v-list-item-title>{{ immovable.status_text }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
@@ -132,7 +132,6 @@ import WaitProgress from "@/components/WaitProgress.vue";
 import ApplicationDialog from "@/components/immovable/ApplicationDialog.vue";
 import errorMixin from "@/mixins/errorMixin.js";
 import { getImmovableIndex, getImmovableIndexEdit, deleteImmovable } from "@/api/immovable.js";
-import { showStatus } from "@/api/immovable_application.js";
 
 export default {
   mixins: [errorMixin],
@@ -166,7 +165,6 @@ export default {
     },
   },
   methods: {
-    showStatus,
     async checkAccess() {
       this.access = await this.errorHandler(getImmovableIndexEdit(this.$route.params.id));
     },

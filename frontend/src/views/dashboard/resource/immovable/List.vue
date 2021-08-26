@@ -9,7 +9,7 @@
         >
           <v-list-item-content>
             <v-list-item-title v-text="immovable.name"></v-list-item-title>
-            <v-list-item-subtitle> {{ showStatus(immovable.status) }} </v-list-item-subtitle>
+            <v-list-item-subtitle>{{ immovable.status_text }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
             <v-icon>mdi-chevron-right</v-icon>
@@ -53,7 +53,6 @@
 import NewKindDialog from "@/components/immovable/NewKindDialog.vue";
 import NewDialog from "@/components/immovable/NewDialog.vue";
 import errorMixin from "@/mixins/errorMixin.js";
-import { showStatus } from "@/api/immovable_application.js";
 
 export default {
   mixins: [errorMixin],
@@ -75,9 +74,6 @@ export default {
   },
   mounted() {
     this.loading = false;
-  },
-  methods: {
-    showStatus,
   },
 };
 </script>

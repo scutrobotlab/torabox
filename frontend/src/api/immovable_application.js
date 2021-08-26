@@ -35,14 +35,3 @@ export async function putImmovableApplication(id, immovable_application) {
 export async function deleteImmovableApplication(id) {
   return await fetchApi("/api/immovable_applications/" + id, "DELETE");
 }
-
-export function showStatus(status) {
-  if (status == 0) {
-    return "在库";
-  } else if (status == 1) {
-    return "借出";
-  } else if (status == -1) {
-    return "损坏";
-  }
-  return "未知";
-}

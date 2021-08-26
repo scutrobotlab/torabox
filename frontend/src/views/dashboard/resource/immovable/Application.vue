@@ -6,7 +6,7 @@
       <v-btn icon @click="$router.push('/dashboard/resource/immovable/' + $route.params.id)">
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
-      <v-toolbar-title> {{ immovable.name }} {{ showStatus(immovable.status) }}</v-toolbar-title>
+      <v-toolbar-title>{{ immovable.status_text }}</v-toolbar-title>
     </v-toolbar>
 
     <WaitProgress v-if="loading" class="ma-7" />
@@ -45,7 +45,6 @@
 import WaitProgress from "@/components/WaitProgress.vue";
 import errorMixin from "@/mixins/errorMixin.js";
 import { getImmovableIndexApplications } from "@/api/immovable.js";
-import { showStatus } from "@/api/immovable_application.js";
 
 export default {
   mixins: [errorMixin],
@@ -64,7 +63,6 @@ export default {
     await this.getImmovableApplications();
   },
   methods: {
-    showStatus,
     async getImmovableApplications() {
       this.loading = true;
       this.immovable = await this.errorHandler(
