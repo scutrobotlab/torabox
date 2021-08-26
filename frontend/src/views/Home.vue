@@ -20,7 +20,7 @@ export default {
   async created() {
     const success = await this.errorHandler(getUserSelfSession());
     if (success) {
-      this.$router.push("/dashboard/main");
+      this.$router.push("/dashboard/resource");
     } else {
       this.$router.push("/user/login");
     }

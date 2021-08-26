@@ -45,7 +45,7 @@ export default {
       this.userSelected = false;
       if (user) {
         localStorage.setItem("login", true);
-        this.$router.push("/dashboard/main");
+        this.$router.push("/dashboard/resource");
       }
     },
     async getFakeUsers() {

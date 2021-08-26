@@ -28,6 +28,146 @@ const routes = [
     name: "UserCallback",
     component: UserCallback,
   },
+
+  {
+    path: "/dashboard",
+    component: () =>
+      import(
+        /* webpackChunkName: "dashboard-drawer" */
+        "@/views/dashboard/Drawer.vue"
+      ),
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: "/",
+        redirect: "resource",
+      },
+      {
+        path: "resource",
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard-resource-main" */
+            "@/views/dashboard/resource/Main.vue"
+          ),
+        meta: {
+          title: "物资",
+          icon: "mdi-package-variant-closed",
+        },
+        children: [
+          {
+            path: "/",
+            redirect: "immovable",
+          },
+          {
+            path: "immovable",
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-resource-immovable-main" */
+                "@/views/dashboard/resource/immovable/Main.vue"
+              ),
+            meta: {
+              title: "不动产",
+              icon: "mdi-diamond-stone",
+            },
+          },
+          {
+            path: "consumable",
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-resource-consumable-main" */
+                "@/views/dashboard/resource/consumable/Main.vue"
+              ),
+            meta: {
+              title: "消耗品",
+              icon: "mdi-nut",
+            },
+            children: [
+              {
+                path: "",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-resource-consumable-list" */
+                    "@/views/dashboard/resource/consumable/List.vue"
+                  ),
+                meta: {
+                  title: "消耗品",
+                },
+              },
+              {
+                path: ":id",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-resource-consumable-indexmain" */
+                    "@/views/dashboard/resource/consumable/IndexMain.vue"
+                  ),
+                children: [
+                  {
+                    path: "",
+                    component: () =>
+                      import(
+                        /* webpackChunkName: "dashboard-resource-consumable-index" */
+                        "@/views/dashboard/resource/consumable/Index.vue"
+                      ),
+                    meta: {
+                      title: "消耗品详情",
+                    },
+                  },
+                  {
+                    path: "application",
+                    component: () =>
+                      import(
+                        /* webpackChunkName: "dashboard-resource-consumable-application" */
+                        "@/views/dashboard/resource/consumable/Application.vue"
+                      ),
+                    meta: {
+                      title: "消耗品申请记录",
+                    },
+                  },
+                  {
+                    path: "purchase",
+                    component: () =>
+                      import(
+                        /* webpackChunkName: "dashboard-resource-consumable-purchase" */
+                        "@/views/dashboard/resource/consumable/Purchase.vue"
+                      ),
+                    meta: {
+                      title: "消耗品购买记录",
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            path: "subscription",
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-resource-subscription-main" */
+                "@/views/dashboard/resource/subscription/Main.vue"
+              ),
+            meta: {
+              title: "订阅类",
+              icon: "mdi-server",
+            },
+          },
+        ],
+      },
+
+      {
+        path: "application",
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard-application-main" */
+            "@/views/dashboard/application/Main.vue"
+          ),
+        meta: {
+          title: "申请",
+          icon: "mdi-list-status",
+        },
+        children: [],
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({

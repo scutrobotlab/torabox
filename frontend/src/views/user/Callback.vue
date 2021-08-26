@@ -24,7 +24,7 @@ export default {
       if (this.$route.query.state) {
         this.$router.push(this.$route.query.state);
       } else {
-        this.$router.push("/dashboard/main");
+        this.$router.push("/dashboard/resource");
       }
     }
   },
