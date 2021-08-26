@@ -29,6 +29,9 @@ class Immovable extends Model
     protected $attributes = [
         'status' => 0,
     ];
+    protected $appends = [
+        'status_text',
+    ];
 
     public function user()
     {
@@ -58,5 +61,25 @@ class Immovable extends Model
     public function approvers()
     {
         return $this->group->leaders();
+    }
+
+    public function getStatusTextAttribute()
+    {
+        $text = '';
+        switch ($this->status) {
+            case 0:
+                $text = '在库';
+                break;
+            case 1:
+                $text = $this->owner->name . '已借出';
+                break;
+            case -1:
+                $text = '损坏';
+                break;
+            default:
+                $text = '未知';
+                break;
+        }
+        return $text;
     }
 }
