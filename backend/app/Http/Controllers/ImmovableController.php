@@ -39,6 +39,7 @@ class ImmovableController extends Controller
         $immovable->kind;
         $immovable->group;
         $immovable->user;
+        $immovable->owner;
 
         return response()->json([
             'immovable' => $immovable,

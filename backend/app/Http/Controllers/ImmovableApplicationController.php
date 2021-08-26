@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\UserMid;
-use App\Http\Requests\ImmovableApplicationForm;
 use App\Models\Immovable;
 use App\Models\ImmovableApplication;
 use Illuminate\Http\Request;
@@ -17,7 +16,7 @@ class ImmovableApplicationController extends Controller
         ]);
     }
 
-    public function store(ImmovableApplicationForm $request)
+    public function store(Request $request)
     {
         $immovable = Immovable::findOrFail($request->immovable_id);
         $immovable_application = new ImmovableApplication();
@@ -32,13 +31,18 @@ class ImmovableApplicationController extends Controller
             $immovable_application->status = 1;
         }
 
-        if (($request->action == 'lend' && $immovable->status == 1) || ($request->action == 'return' && $immovable->status == 0)) {
+        $action = 'lend';
+        if ($immovable->status == 0) {
+            $action = 'lend';
+        } else if ($immovable->status == 1 && $immovable->owner_id == UserMid::$user->id) {
+            $action = 'return';
+        } else {
             return response()->json([
                 'message' => '操作错误',
             ], 403);
         }
 
-        $immovable_application->action = $request->action;
+        $immovable_application->action = $action;
         $immovable_application->description = $request->description;
         $immovable_application->save();
         $immovable_application->updateImmovable();

@@ -20,6 +20,7 @@ class Immovable extends Model
         'user_id',
         'need_approval',
         'status',
+        'owner_id',
         'description',
     ];
     protected $hidden = [
@@ -30,6 +31,11 @@ class Immovable extends Model
     ];
 
     public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function owner()
     {
         return $this->belongsTo(User::class);
     }

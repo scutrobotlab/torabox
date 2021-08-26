@@ -21,6 +21,7 @@ class CreateImmovablesTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->boolean('need_approval');
             $table->tinyInteger('status');
+            $table->foreignId('owner_id')->nullable()->constrained('users');
             $table->text('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
