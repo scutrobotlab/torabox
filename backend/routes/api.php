@@ -66,9 +66,7 @@ Route::middleware(UserMid::class)->group(function () {
             Route::get('/applications', [ImmovableController::class, 'indexApplications']);
             Route::get('/approvers', [ImmovableController::class, 'indexApprovers']);
         });
-        Route::middleware(EnsureUserInGroup::class)->group(function () {
-            Route::post('/', [ImmovableController::class, 'store']);
-        });
+        Route::post('/', [ImmovableController::class, 'store']);
     });
 
     Route::prefix('/immovable_kinds')->group(function () {
