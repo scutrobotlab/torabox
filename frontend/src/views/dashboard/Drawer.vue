@@ -70,9 +70,11 @@ export default {
   data: () => ({
     loading: false,
     drawer: null,
+    subRoutes: null,
   }),
   async created() {
     Promise.all([this.$store.dispatch("getUser"), this.$store.dispatch("getGroups")]);
+    this.getSubRoutes();
   },
   computed: {
     title() {
@@ -82,14 +84,13 @@ export default {
       const dashboard = this.$router.options.routes.find((route) => route.path === "/dashboard");
       return dashboard.children.filter((c) => c.meta != null);
     },
-    subRoutes() {
-      const r = this.routes.find(
-        (route) => "/dashboard/" + route.path === this.$router.currentRoute.matched[1].path
-      );
-      return r.children.filter((c) => c.meta != null);
-    },
     user() {
       return this.$store.state.user;
+    },
+  },
+  watch: {
+    $route() {
+      this.getSubRoutes();
     },
   },
   methods: {
@@ -97,8 +98,11 @@ export default {
       this.loading = true;
       await this.$store.dispatch("deleteUser");
     },
-    RoutePush(path) {
-      if (this.$route.path != "/dashboard/" + path) this.$router.push("/dashboard/" + path);
+    getSubRoutes() {
+      const r = this.routes.find(
+        (route) => "/dashboard/" + route.path === this.$router.currentRoute.matched[1].path
+      );
+      this.subRoutes = r.children.filter((c) => c.meta != null);
     },
   },
 };
