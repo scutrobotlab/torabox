@@ -1,5 +1,6 @@
 <template>
   <v-list two-line>
+    <slot></slot>
     <v-list-item
       v-for="immovable in immovables"
       :key="immovable.id"

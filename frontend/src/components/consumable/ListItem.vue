@@ -1,5 +1,6 @@
 <template>
   <v-list two-line>
+    <slot></slot>
     <v-list-item
       v-for="consumable in consumables"
       :key="consumable.id"

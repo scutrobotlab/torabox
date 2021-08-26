@@ -1,5 +1,6 @@
 <template>
   <v-list two-line>
+    <slot></slot>
     <v-list-item
       v-for="subscription in subscriptions"
       :key="subscription.id"
