@@ -55,7 +55,7 @@ const routes = [
         },
         children: [
           {
-            path: "/",
+            path: "",
             redirect: "immovable",
           },
           {
@@ -233,7 +233,84 @@ const routes = [
           title: "申请",
           icon: "mdi-list-status",
         },
-        children: [],
+        children: [
+          {
+            path: "",
+            redirect: "immovable",
+          },
+          {
+            path: "immovable",
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-application-immovable-main" */
+                "@/views/dashboard/application/immovable/Main.vue"
+              ),
+            meta: {
+              title: "不动产申请",
+              icon: "mdi-diamond-stone",
+            },
+            children: [
+              {
+                path: "",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-application-immovable-list" */
+                    "@/views/dashboard/application/immovable/List.vue"
+                  ),
+                meta: {
+                  title: "不动产申请",
+                },
+              },
+              {
+                path: ":id",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-application-immovable-index" */
+                    "@/views/dashboard/application/immovable/Index.vue"
+                  ),
+                meta: {
+                  title: "不动产申请详情",
+                },
+              },
+            ],
+          },
+          {
+            path: "consumable",
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-application-consumable-main" */
+                "@/views/dashboard/application/consumable/Main.vue"
+              ),
+            meta: {
+              title: "消耗品申请",
+              icon: "mdi-nut",
+            },
+            children: [
+              {
+                path: "",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-application-consumable-list" */
+                    "@/views/dashboard/application/consumable/List.vue"
+                  ),
+                meta: {
+                  title: "消耗品申请",
+                },
+              },
+              {
+                path: ":id",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-application-consumable-index" */
+                    "@/views/dashboard/application/consumable/Index.vue"
+                  ),
+                meta: {
+                  title: "消耗品申请详情",
+                },
+              },
+            ],
+          },
+        ],
       },
     ],
   },
