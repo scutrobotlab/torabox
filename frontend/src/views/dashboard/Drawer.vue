@@ -99,10 +99,13 @@ export default {
       await this.$store.dispatch("deleteUser");
     },
     getSubRoutes() {
-      const r = this.routes.find(
-        (route) => "/dashboard/" + route.path === this.$router.currentRoute.matched[1].path
-      );
-      this.subRoutes = r.children.filter((c) => c.meta != null);
+      const p = this.$router.currentRoute.matched[1].path;
+      if (p != "/dashboard/resource" && p != "/dashboard/application") {
+        this.subRoutes = null;
+      } else {
+        const r = this.routes.find((route) => "/dashboard/" + route.path === p);
+        this.subRoutes = r.children.filter((c) => c.meta != null);
+      }
     },
   },
 };
