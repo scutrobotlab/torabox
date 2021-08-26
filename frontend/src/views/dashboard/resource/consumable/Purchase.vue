@@ -16,9 +16,7 @@
         <v-list-item v-for="purchase in consumable.purchases" :key="purchase.id">
           <v-list-item-content>
             <v-list-item-title v-text="purchase.user.name"></v-list-item-title>
-            <v-list-item-subtitle>
-              {{ "购买数量：" + purchase.number }}
-            </v-list-item-subtitle>
+            <v-list-item-subtitle> 购买数量： {{ purchase.number }} </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-list>

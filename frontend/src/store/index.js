@@ -4,6 +4,7 @@ import router from "@/router";
 import { getUserSelf, putUserSelf, deleteUserSelfSession } from "@/api/user.js";
 import { getGroups } from "@/api/group.js";
 import { getImmovableKinds } from "@/api/immovable_kind.js";
+import { getImmovables } from "@/api/immovable.js";
 import { getConsumables } from "@/api/consumable.js";
 import { getSubscriptions } from "@/api/subscription.js";
 
@@ -20,6 +21,7 @@ export default new Vuex.Store({
     },
     groups: null,
     kinds: null,
+    immovables: null,
     consumables: null,
     subscriptions: null,
   },
@@ -35,6 +37,9 @@ export default new Vuex.Store({
     },
     setKinds(state, kinds) {
       state.kinds = kinds;
+    },
+    setImmovables(state, immovables) {
+      state.immovables = immovables;
     },
     setConsumables(state, consumables) {
       state.consumables = consumables;
@@ -69,6 +74,11 @@ export default new Vuex.Store({
     getKinds({ commit }) {
       getImmovableKinds().then((resp) => {
         commit("setKinds", resp);
+      });
+    },
+    getImmovables({ commit }) {
+      getImmovables().then((resp) => {
+        commit("setImmovables", resp);
       });
     },
     getConsumables({ commit }) {

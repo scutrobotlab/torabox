@@ -9,7 +9,6 @@ export async function postImmovableApplication(immovable_application) {
   const resp = await fetchApi("/api/immovable_applications", "POST", {
     immovable_id: immovable_application.immovable_id,
     approver_id: immovable_application.approver_id,
-    action: immovable_application.action,
     description: immovable_application.description,
   });
   return resp.immovable_application;
@@ -35,4 +34,15 @@ export async function putImmovableApplication(id, immovable_application) {
 
 export async function deleteImmovableApplication(id) {
   return await fetchApi("/api/immovable_applications/" + id, "DELETE");
+}
+
+export function showStatus(status) {
+  if (status == 0) {
+    return "在库";
+  } else if (status == 1) {
+    return "借出";
+  } else if (status == -1) {
+    return "损坏";
+  }
+  return "未知";
 }

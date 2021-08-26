@@ -69,6 +69,51 @@ const routes = [
               title: "不动产",
               icon: "mdi-diamond-stone",
             },
+            children: [
+              {
+                path: "",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-resource-immovable-list" */
+                    "@/views/dashboard/resource/immovable/List.vue"
+                  ),
+                meta: {
+                  title: "不动产",
+                },
+              },
+              {
+                path: ":id",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-resource-immovable-indexmain" */
+                    "@/views/dashboard/resource/immovable/IndexMain.vue"
+                  ),
+                children: [
+                  {
+                    path: "",
+                    component: () =>
+                      import(
+                        /* webpackChunkName: "dashboard-resource-immovable-index" */
+                        "@/views/dashboard/resource/immovable/Index.vue"
+                      ),
+                    meta: {
+                      title: "不动产详情",
+                    },
+                  },
+                  {
+                    path: "application",
+                    component: () =>
+                      import(
+                        /* webpackChunkName: "dashboard-resource-immovable-application" */
+                        "@/views/dashboard/resource/immovable/Application.vue"
+                      ),
+                    meta: {
+                      title: "不动产记录",
+                    },
+                  },
+                ],
+              },
+            ],
           },
           {
             path: "consumable",

@@ -72,11 +72,7 @@ export default {
     drawer: null,
   }),
   async created() {
-    Promise.all([
-      this.$store.dispatch("getUser"),
-      this.$store.dispatch("getGroups"),
-      this.$store.dispatch("getKinds"),
-    ]);
+    Promise.all([this.$store.dispatch("getUser"), this.$store.dispatch("getGroups")]);
   },
   computed: {
     title() {
