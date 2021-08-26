@@ -54,7 +54,7 @@ class ImmovableApplication extends Model
         if ($this->status != 1) {
             return;
         }
-        if ($this->action = 'lend') {
+        if ($this->action == 'lend') {
             $this->immovable->status = 1;
             $this->immovable->owner_id = $this->applicant_id;
         } else {
