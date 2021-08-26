@@ -25,6 +25,44 @@ export default new Vuex.Store({
     consumables: null,
     subscriptions: null,
   },
+  getters: {
+    searchImmovables: (state) => (keyword) => {
+      if (keyword == "") return [];
+      return state.immovables.filter(function(product) {
+        return Object.keys(product).some(function(key) {
+          return (
+            String(product[key])
+              .toLowerCase()
+              .indexOf(keyword) > -1
+          );
+        });
+      });
+    },
+    searchConsumables: (state) => (keyword) => {
+      if (keyword == "") return [];
+      return state.consumables.filter(function(product) {
+        return Object.keys(product).some(function(key) {
+          return (
+            String(product[key])
+              .toLowerCase()
+              .indexOf(keyword) > -1
+          );
+        });
+      });
+    },
+    searchSubscriptions: (state) => (keyword) => {
+      if (keyword == "") return [];
+      return state.subscriptions.filter(function(product) {
+        return Object.keys(product).some(function(key) {
+          return (
+            String(product[key])
+              .toLowerCase()
+              .indexOf(keyword) > -1
+          );
+        });
+      });
+    },
+  },
   mutations: {
     setUser(state, user) {
       state.user = user;

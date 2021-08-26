@@ -313,6 +313,18 @@ const routes = [
         ],
       },
       {
+        path: "search",
+        component: () =>
+          import(
+            /* webpackChunkName: "dashboard-search-main" */
+            "@/views/dashboard/search/Main.vue"
+          ),
+        meta: {
+          title: "搜索",
+          icon: "mdi-magnify",
+        },
+      },
+      {
         path: "account",
         component: () =>
           import(
@@ -328,7 +340,7 @@ const routes = [
             path: "",
             component: () =>
               import(
-                /* webpackChunkName: "dashboard-account" */
+                /* webpackChunkName: "dashboard-account-info" */
                 "@/views/dashboard/account/Info.vue"
               ),
             meta: {
