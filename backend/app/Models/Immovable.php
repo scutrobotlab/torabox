@@ -36,7 +36,7 @@ class Immovable extends Model
 
     public function kind()
     {
-        return $this->belongsTo(ImmovableKind::class);
+        return $this->belongsTo(ImmovableKind::class, "immovable_kind_id", "id");
     }
 
     public function applications()
