@@ -39,7 +39,6 @@ Route::prefix('/users')->group(function () {
 
 Route::middleware(UserMid::class)->group(function () {
     Route::prefix('/users')->group(function () {
-        Route::get('/{id}', [UserController::class, 'index']);
         Route::prefix('/self')->group(function () {
             Route::get('/', [UserController::class, 'indexSelf']);
             Route::get('/notification_count', [UserController::class, 'indexSelfNotificationCount']);
@@ -51,6 +50,7 @@ Route::middleware(UserMid::class)->group(function () {
             Route::put('/', [UserController::class, 'updateSelf']);
             Route::delete('/session', [UserController::class, 'logout']);
         });
+        Route::get('/{id}', [UserController::class, 'index']);
     });
 
     Route::prefix('/groups')->group(function () {
@@ -65,6 +65,7 @@ Route::middleware(UserMid::class)->group(function () {
 
     Route::prefix('/immovables')->group(function () {
         Route::get('/', [ImmovableController::class, 'list']);
+        Route::post('/', [ImmovableController::class, 'store']);
         Route::prefix('/{id}')->group(function () {
             Route::get('/', [ImmovableController::class, 'index']);
             Route::get('/edit', [ImmovableController::class, 'edit']);
@@ -73,19 +74,18 @@ Route::middleware(UserMid::class)->group(function () {
             Route::get('/applications', [ImmovableController::class, 'indexApplications']);
             Route::get('/approvers', [ImmovableController::class, 'indexApprovers']);
         });
-        Route::post('/', [ImmovableController::class, 'store']);
     });
 
     Route::prefix('/immovable_kinds')->group(function () {
         Route::get('/', [ImmovableKindController::class, 'list']);
+        Route::middleware(EnsureUserInGroup::class)->group(function () {
+            Route::post('/', [ImmovableKindController::class, 'store']);
+        });
         Route::prefix('/{id}')->group(function () {
             Route::get('/', [ImmovableKindController::class, 'index']);
             Route::get('/edit', [ImmovableKindController::class, 'edit']);
             Route::delete('/', [ImmovableKindController::class, 'destroy']);
             Route::get('/immovables', [ImmovableKindController::class, 'indexImmovableList']);
-        });
-        Route::middleware(EnsureUserInGroup::class)->group(function () {
-            Route::post('/', [ImmovableKindController::class, 'store']);
         });
     });
 
@@ -101,6 +101,9 @@ Route::middleware(UserMid::class)->group(function () {
 
     Route::prefix('/consumables')->group(function () {
         Route::get('/', [ConsumableController::class, 'list']);
+        Route::middleware(EnsureUserInGroup::class)->group(function () {
+            Route::post('/', [ConsumableController::class, 'store']);
+        });
         Route::prefix('/{id}')->group(function () {
             Route::get('/', [ConsumableController::class, 'index']);
             Route::get('/edit', [ConsumableController::class, 'edit']);
@@ -109,9 +112,6 @@ Route::middleware(UserMid::class)->group(function () {
             Route::get('/applications', [ConsumableController::class, 'indexApplications']);
             Route::get('/purchases', [ConsumableController::class, 'indexPurchases']);
             Route::get('/approvers', [ConsumableController::class, 'indexApprovers']);
-        });
-        Route::middleware(EnsureUserInGroup::class)->group(function () {
-            Route::post('/', [ConsumableController::class, 'store']);
         });
     });
 
@@ -134,22 +134,22 @@ Route::middleware(UserMid::class)->group(function () {
 
     Route::prefix('/subscriptions')->group(function () {
         Route::get('/', [SubscriptionController::class, 'list']);
-        Route::get('/{id}', [SubscriptionController::class, 'index']);
-        Route::get('/{id}/edit', [SubscriptionController::class, 'edit']);
-        Route::delete('/{id}', [SubscriptionController::class, 'destroy']);
         Route::middleware(EnsureUserInGroup::class)->group(function () {
             Route::post('/', [SubscriptionController::class, 'store']);
             Route::put('/{id}', [SubscriptionController::class, 'update']);
         });
+        Route::get('/{id}', [SubscriptionController::class, 'index']);
+        Route::get('/{id}/edit', [SubscriptionController::class, 'edit']);
+        Route::delete('/{id}', [SubscriptionController::class, 'destroy']);
     });
 });
 
 Route::middleware(FakeMid::class)->group(function () {
     Route::prefix('/users_fake')->group(function () {
         Route::get('/', [UserController::class, 'fakeList']);
-        Route::get('/{id}', [UserController::class, 'fakeIndex']);
         Route::prefix('/self')->group(function () {
             Route::post('/session', [UserController::class, 'fakeLogin']);
         });
+        Route::get('/{id}', [UserController::class, 'fakeIndex']);
     });
 });
