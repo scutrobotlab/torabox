@@ -42,11 +42,11 @@ class UserController extends Controller
     {
         return response()->json([
             'notification_count' => [
-                'immovables_owned' => UserMid::$user->immovables_owned->count(),
-                'immovable_applications_applied' => UserMid::$user->immovable_applications_applied_pending->count(),
-                'immovable_applications_approved' => UserMid::$user->immovable_applications_approved_pending->count(),
-                'consumable_applications_applied' => UserMid::$user->consumable_applications_applied_pending->count(),
-                'consumable_applications_approved' => UserMid::$user->consumable_applications_approved_pending->count(),
+                'immovables_owned' => UserMid::$user->immovables_owned()->get()->count(),
+                'immovable_applications_applied' => UserMid::$user->immovable_applications_applied_pending()->get()->count(),
+                'immovable_applications_approved' => UserMid::$user->immovable_applications_approved_pending()->get()->count(),
+                'consumable_applications_applied' => UserMid::$user->consumable_applications_applied_pending()->get()->count(),
+                'consumable_applications_approved' => UserMid::$user->consumable_applications_approved_pending()->get()->count(),
             ],
         ]);
     }
@@ -54,7 +54,7 @@ class UserController extends Controller
     public function indexSelfImmovablesOwned()
     {
         return response()->json([
-            'immovables' => UserMid::$user->immovables_owned,
+            'immovables' => UserMid::$user->immovables_owned()->get(),
         ]);
     }
 
@@ -62,9 +62,9 @@ class UserController extends Controller
     {
         $immovables_applications = null;
         if ($request->pending) {
-            $immovables_applications = UserMid::$user->immovable_applications_applied_pending;
+            $immovables_applications = UserMid::$user->immovable_applications_applied_pending()->get();
         } else {
-            $immovables_applications = UserMid::$user->immovable_applications_applied;
+            $immovables_applications = UserMid::$user->immovable_applications_applied()->get();
         }
 
         return response()->json([
@@ -76,9 +76,9 @@ class UserController extends Controller
     {
         $immovables_applications = null;
         if ($request->pending) {
-            $immovables_applications = UserMid::$user->immovable_applications_approved_pending;
+            $immovables_applications = UserMid::$user->immovable_applications_approved_pending()->get();
         } else {
-            $immovables_applications = UserMid::$user->immovable_applications_approved;
+            $immovables_applications = UserMid::$user->immovable_applications_approved()->get();
         }
 
         return response()->json([
@@ -90,9 +90,9 @@ class UserController extends Controller
     {
         $consumable_applications = null;
         if ($request->pending) {
-            $consumable_applications = UserMid::$user->consumable_applications_applied_pending;
+            $consumable_applications = UserMid::$user->consumable_applications_applied_pending()->get();
         } else {
-            $consumable_applications = UserMid::$user->consumable_applications_applied;
+            $consumable_applications = UserMid::$user->consumable_applications_applied()->get();
         }
 
         return response()->json([
@@ -104,9 +104,9 @@ class UserController extends Controller
     {
         $consumable_applications = null;
         if ($request->pending) {
-            $consumable_applications = UserMid::$user->consumable_applications_approved_pending;
+            $consumable_applications = UserMid::$user->consumable_applications_approved_pending()->get();
         } else {
-            $consumable_applications = UserMid::$user->consumable_applications_approved;
+            $consumable_applications = UserMid::$user->consumable_applications_approved()->get();
         }
 
         return response()->json([
