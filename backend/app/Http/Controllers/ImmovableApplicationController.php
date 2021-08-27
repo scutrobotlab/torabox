@@ -100,6 +100,16 @@ class ImmovableApplicationController extends Controller
             ], 400);
         }
 
+        if (
+            $request->status == 1
+            && (($immovable_application->immovable->status != 1 && $immovable_application->action == 'return')
+                || ($immovable_application->immovable->status != 0 && $immovable_application->action == 'lend'))
+        ) {
+            return response()->json([
+                'message' => '操作冲突',
+            ], 400);
+        }
+
         $immovable_application->status = $request->status;
         $immovable_application->description = $request->description;
         $immovable_application->save();
