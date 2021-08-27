@@ -1,8 +1,13 @@
 import { fetchApi } from "./internal";
 
-export async function getConsumableApplications() {
-  const resp = await fetchApi("/api/consumable_applications");
+export async function getConsumableApplications(page) {
+  const resp = await fetchApi("/api/consumable_applications?page=" + page);
   return resp.consumable_applications;
+}
+
+export async function getConsumableApplicationPaginationLength() {
+  const resp = await fetchApi("/api/consumable_applications/pagination_length");
+  return resp.pagination_length;
 }
 
 export async function postConsumableApplication(consumable_application) {

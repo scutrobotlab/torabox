@@ -1,8 +1,13 @@
 import { fetchApi } from "./internal";
 
-export async function getImmovableApplications() {
-  const resp = await fetchApi("/api/immovable_applications");
+export async function getImmovableApplications(page) {
+  const resp = await fetchApi("/api/immovable_applications?page=" + page);
   return resp.immovable_applications;
+}
+
+export async function getImmovableApplicationPaginationLength() {
+  const resp = await fetchApi("/api/immovable_applications/pagination_length");
+  return resp.pagination_length;
 }
 
 export async function postImmovableApplication(immovable_application) {
