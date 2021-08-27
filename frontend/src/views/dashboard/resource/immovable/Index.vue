@@ -23,7 +23,7 @@
                 <v-list-item-icon>
                   <v-icon> mdi-cloud-download </v-icon>
                 </v-list-item-icon>
-                <v-list-item-title>申请借出</v-list-item-title>
+                <v-list-item-title>借出</v-list-item-title>
               </v-list-item>
 
               <v-list-item
@@ -34,7 +34,7 @@
                 <v-list-item-icon>
                   <v-icon> mdi-cloud-upload </v-icon>
                 </v-list-item-icon>
-                <v-list-item-title>申请还回</v-list-item-title>
+                <v-list-item-title>还回</v-list-item-title>
               </v-list-item>
 
               <v-list-item link v-if="access" @click="dialog = true">

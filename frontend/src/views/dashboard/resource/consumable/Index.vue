@@ -17,14 +17,14 @@
             <v-list>
               <v-list-item link @click="$refs.ApplicationDialog.openDialog()">
                 <v-list-item-icon>
-                  <v-icon> mdi-tools </v-icon>
+                  <v-icon> mdi-cloud-download </v-icon>
                 </v-list-item-icon>
                 <v-list-item-title>申请</v-list-item-title>
               </v-list-item>
 
               <v-list-item link @click="$refs.PurchaseDialog.openDialog()">
                 <v-list-item-icon>
-                  <v-icon> mdi-cart </v-icon>
+                  <v-icon> mdi-cloud-upload </v-icon>
                 </v-list-item-icon>
                 <v-list-item-title>购买</v-list-item-title>
               </v-list-item>
