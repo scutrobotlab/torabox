@@ -54,7 +54,7 @@ class User extends Model
 
     public function immovable_applications_applied()
     {
-        return $this->hasMany(ImmovableApplication::class, 'applicant_id');
+        return $this->hasMany(ImmovableApplication::class, 'applicant_id')->latest();
     }
 
     public function immovable_applications_applied_pending()
@@ -64,7 +64,7 @@ class User extends Model
 
     public function immovable_applications_approved()
     {
-        return $this->hasMany(ImmovableApplication::class, 'approver_id');
+        return $this->hasMany(ImmovableApplication::class, 'approver_id')->latest();
     }
 
     public function immovable_applications_approved_pending()
@@ -79,7 +79,7 @@ class User extends Model
 
     public function consumable_applications_applied()
     {
-        return $this->hasMany(ConsumableApplication::class, 'applicant_id');
+        return $this->hasMany(ConsumableApplication::class, 'applicant_id')->latest();
     }
 
     public function consumable_applications_applied_pending()
@@ -89,7 +89,7 @@ class User extends Model
 
     public function consumable_applications_approved()
     {
-        return $this->hasMany(ConsumableApplication::class, 'approver_id');
+        return $this->hasMany(ConsumableApplication::class, 'approver_id')->latest();
     }
 
     public function consumable_applications_approved_pending()

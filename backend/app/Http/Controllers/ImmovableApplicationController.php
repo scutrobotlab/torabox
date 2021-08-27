@@ -12,7 +12,7 @@ class ImmovableApplicationController extends Controller
     public function list()
     {
         return response()->json([
-            'immovable_applications' => ImmovableApplication::paginate()->load(['immovable', 'applicant', 'approver']),
+            'immovable_applications' => ImmovableApplication::latest()->paginate()->load(['immovable', 'applicant', 'approver']),
         ]);
     }
 

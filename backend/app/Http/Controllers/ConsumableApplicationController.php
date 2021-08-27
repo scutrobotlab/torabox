@@ -13,7 +13,7 @@ class ConsumableApplicationController extends Controller
     public function list()
     {
         return response()->json([
-            'consumable_applications' => ConsumableApplication::paginate()->load(['consumable', 'applicant', 'approver']),
+            'consumable_applications' => ConsumableApplication::latest()->paginate()->load(['consumable', 'applicant', 'approver']),
         ]);
     }
 

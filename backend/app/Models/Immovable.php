@@ -50,7 +50,7 @@ class Immovable extends Model
 
     public function applications()
     {
-        return $this->hasMany(ImmovableApplication::class);
+        return $this->hasMany(ImmovableApplication::class)->latest();
     }
 
     public function group()

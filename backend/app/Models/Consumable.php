@@ -41,12 +41,12 @@ class Consumable extends Model
 
     public function applications()
     {
-        return $this->hasMany(ConsumableApplication::class);
+        return $this->hasMany(ConsumableApplication::class)->latest();
     }
 
     public function purchases()
     {
-        return $this->hasMany(ConsumablePurchase::class);
+        return $this->hasMany(ConsumablePurchase::class)->latest();
     }
 
     public function approvers()
