@@ -1,13 +1,13 @@
 <template>
-  <v-dialog v-model="dialog" transition="dialog-bottom-transition">
+  <v-dialog v-model="dialog" transition="dialog-bottom-transition" max-width="350">
     <v-card>
-      <v-toolbar dark>
+      <v-toolbar dark dense>
         <v-spacer />
         <v-btn icon dark @click="dialog = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar>
-      <v-row class="fill-height" align-content="center" justify="center">
+      <v-row align-content="center" justify="center">
         <canvas ref="qrcode" class="qrcode" />
       </v-row>
     </v-card>
