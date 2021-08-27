@@ -8,6 +8,7 @@
           </v-btn>
           <v-toolbar-title>{{ immovable.name }}</v-toolbar-title>
           <v-spacer></v-spacer>
+          <v-btn icon @click="$refs.QrcodeDialog.showQrcode()"><v-icon>mdi-qrcode</v-icon></v-btn>
           <v-menu
             offset-y
             transition="slide-y-transition"
@@ -112,6 +113,7 @@
         </v-list>
 
         <ApplicationDialog ref="ApplicationDialog" @getImmovable="getImmovable" />
+        <QrcodeDialog ref="QrcodeDialog" :qrcode-content="qrcodeContent" />
 
         <v-dialog v-model="dialog" persistent max-width="290">
           <v-card v-if="immovable">
@@ -142,6 +144,7 @@
 
 <script>
 import WaitProgress from "@/components/WaitProgress.vue";
+import QrcodeDialog from "@/components/QrcodeDialog.vue";
 import ApplicationDialog from "@/components/immovable/ApplicationDialog.vue";
 import EditSheet from "@/components/immovable/EditSheet.vue";
 import errorMixin from "@/mixins/errorMixin.js";
@@ -153,6 +156,7 @@ export default {
     WaitProgress,
     ApplicationDialog,
     EditSheet,
+    QrcodeDialog,
   },
   data: () => ({
     show: false,
@@ -161,12 +165,14 @@ export default {
     dialog: false,
     access: false,
     immovable: null,
+    qrcodeContent: "",
   }),
-  created() {
+  async created() {
     this.loading = true;
-    Promise.all([this.checkAccess(), this.getImmovable()]).finally(() => {
+    await Promise.all([this.checkAccess(), this.getImmovable()]).finally(() => {
       this.loading = false;
     });
+    this.qrcodeContent = window.location.origin + "/immovable/" + this.immovable.uuid;
   },
   mounted() {
     this.show = true;

@@ -30,6 +30,18 @@ const routes = [
   },
 
   {
+    path: "/immovable/:id",
+    redirect: "/dashboard/resource/immovable/:id",
+    meta: { requiresAuth: true },
+  },
+
+  {
+    path: "/consumable/:id",
+    redirect: "/dashboard/resource/consumable/:id",
+    meta: { requiresAuth: true },
+  },
+
+  {
     path: "/dashboard",
     component: () =>
       import(

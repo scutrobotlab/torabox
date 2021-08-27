@@ -8,6 +8,7 @@
           </v-btn>
           <v-toolbar-title v-if="consumable">{{ consumable.name }}</v-toolbar-title>
           <v-spacer></v-spacer>
+          <v-btn icon @click="$refs.QrcodeDialog.showQrcode()"><v-icon>mdi-qrcode</v-icon></v-btn>
           <v-menu offset-y transition="slide-y-transition">
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon v-bind="attrs" v-on="on">
@@ -104,6 +105,7 @@
 
         <ApplicationDialog ref="ApplicationDialog" @getConsumable="getConsumable" />
         <PurchaseDialog ref="PurchaseDialog" @getConsumable="getConsumable" />
+        <QrcodeDialog ref="QrcodeDialog" :qrcode-content="qrcodeContent" />
 
         <v-dialog v-model="dialog" persistent max-width="290">
           <v-card v-if="consumable">
@@ -134,6 +136,7 @@
 
 <script>
 import WaitProgress from "@/components/WaitProgress.vue";
+import QrcodeDialog from "@/components/QrcodeDialog.vue";
 import ApplicationDialog from "@/components/consumable/ApplicationDialog.vue";
 import PurchaseDialog from "@/components/consumable/PurchaseDialog.vue";
 import EditSheet from "@/components/consumable/EditSheet.vue";
@@ -147,6 +150,7 @@ export default {
     ApplicationDialog,
     PurchaseDialog,
     EditSheet,
+    QrcodeDialog,
   },
   data: () => ({
     show: false,
@@ -155,12 +159,14 @@ export default {
     dialog: false,
     access: false,
     consumable: null,
+    qrcodeContent: "",
   }),
-  created() {
+  async created() {
     this.loading = true;
-    Promise.all([this.checkAccess(), this.getConsumable()]).finally(() => {
+    await Promise.all([this.checkAccess(), this.getConsumable()]).finally(() => {
       this.loading = false;
     });
+    this.qrcodeContent = window.location.origin + "/consumable/" + this.consumable.uuid;
   },
   mounted() {
     this.show = true;
