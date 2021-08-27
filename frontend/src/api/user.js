@@ -27,6 +27,38 @@ export async function getUserSelf() {
   return resp.user;
 }
 
+export async function getUserSelfNotificationCount() {
+  const resp = await fetchApi("/api/users/self/notification_count");
+  return resp.notification_count;
+}
+
+export async function getUserSelfImmovablesOwned() {
+  const resp = await fetchApi("/api/users/self/immovables_owned");
+  return resp.immovables;
+}
+
+export async function getUserSelfImmovableApplicationsApplied(pending = "") {
+  const resp = await fetchApi("/api/users/self/immovable_applications_applied?pending=" + pending);
+  return resp.immovable_applications;
+}
+
+export async function getUserSelfImmovableApplicationsApproved(pending = "") {
+  const resp = await fetchApi("/api/users/self/immovable_applications_approved?pending=" + pending);
+  return resp.immovable_applications;
+}
+
+export async function getUserSelfConsumableApplicationsApplied(pending = "") {
+  const resp = await fetchApi("/api/users/self/consumable_applications_applied?pending=" + pending);
+  return resp.consumable_applications;
+}
+
+export async function getUserSelfConsumableApplicationsApproved(pending = "") {
+  const resp = await fetchApi(
+    "/api/users/self/consumable_applications_approved?pending=" + pending
+  );
+  return resp.consumable_applications;
+}
+
 export async function putUserSelf() {
   const resp = await fetchApi("/api/users/self", "PUT");
   return resp.user;

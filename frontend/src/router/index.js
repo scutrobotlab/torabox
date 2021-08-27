@@ -347,6 +347,87 @@ const routes = [
               title: "我的",
             },
           },
+          {
+            path: "immovable",
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-account-immovable-main" */
+                "@/views/dashboard/account/immovable/Main.vue"
+              ),
+            meta: {
+              title: "我的不动产",
+            },
+            children: [
+              {
+                path: "owned",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-account-immovable-owned" */
+                    "@/views/dashboard/account/immovable/Owned.vue"
+                  ),
+                meta: {
+                  title: "我的拥有的物资",
+                },
+              },
+              {
+                path: "application_applied",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-account-immovable-application-applied" */
+                    "@/views/dashboard/account/immovable/ApplicationApplied.vue"
+                  ),
+                meta: {
+                  title: "我发起的申请",
+                },
+              },
+              {
+                path: "application_approved",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-account-immovable-application_approved" */
+                    "@/views/dashboard/account/immovable/ApplicationApproved.vue"
+                  ),
+                meta: {
+                  title: "我审核的申请",
+                },
+              },
+            ],
+          },
+          {
+            path: "consumable",
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-account-consumable-main" */
+                "@/views/dashboard/account/consumable/Main.vue"
+              ),
+            meta: {
+              title: "我的消耗品",
+            },
+            children: [
+              {
+                path: "application_applied",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-account-consumable-application-applied" */
+                    "@/views/dashboard/account/consumable/ApplicationApplied.vue"
+                  ),
+                meta: {
+                  title: "我发起的申请",
+                },
+              },
+              {
+                path: "application_approved",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-account-consumable-application_approved" */
+                    "@/views/dashboard/account/consumable/ApplicationApproved.vue"
+                  ),
+                meta: {
+                  title: "我审核的申请",
+                },
+              },
+            ],
+          },
         ],
       },
     ],
