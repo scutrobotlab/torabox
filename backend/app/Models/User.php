@@ -42,6 +42,66 @@ class User extends Model
         return $this->belongsToMany(Group::class, 'privileges', 'user_id', 'group_id')->withPivot('privilege')->wherePivot('privilege', 2);
     }
 
+    public function immovables()
+    {
+        return $this->hasMany(Immovable::class);
+    }
+
+    public function immovables_owned()
+    {
+        return $this->hasMany(Immovable::class, 'owner_id');
+    }
+
+    public function immovable_applications_applied()
+    {
+        return $this->hasMany(ImmovableApplication::class, 'applicant_id');
+    }
+
+    public function immovable_applications_applied_pending()
+    {
+        return $this->immovable_applications_applied()->where('status', 0);
+    }
+
+    public function immovable_applications_approved()
+    {
+        return $this->hasMany(ImmovableApplication::class, 'approver_id');
+    }
+
+    public function immovable_applications_approved_pending()
+    {
+        return $this->immovable_applications_approved()->where('status', 0);
+    }
+
+    public function consumables()
+    {
+        return $this->hasMany(Consumable::class);
+    }
+
+    public function consumable_applications_applied()
+    {
+        return $this->hasMany(ConsumableApplication::class, 'applicant_id');
+    }
+
+    public function consumable_applications_applied_pending()
+    {
+        return $this->consumable_applications_applied()->where('status', 0);
+    }
+
+    public function consumable_applications_approved()
+    {
+        return $this->hasMany(ConsumableApplication::class, 'approver_id');
+    }
+
+    public function consumable_applications_approved_pending()
+    {
+        return $this->consumable_applications_approved()->where('status', 0);
+    }
+
+    public function consumable_purchases()
+    {
+        return $this->hasMany(ConsumablePurchase::class);
+    }
+
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class);

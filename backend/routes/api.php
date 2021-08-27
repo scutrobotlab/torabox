@@ -42,6 +42,12 @@ Route::middleware(UserMid::class)->group(function () {
         Route::get('/{id}', [UserController::class, 'index']);
         Route::prefix('/self')->group(function () {
             Route::get('/', [UserController::class, 'indexSelf']);
+            Route::get('/notification_count', [UserController::class, 'indexSelfNotificationCount']);
+            Route::get('/immovables_owned', [UserController::class, 'indexSelfImmovablesOwned']);
+            Route::get('/immovable_applications_applied', [UserController::class, 'indexSelfImmovableApplicationsApplied']);
+            Route::get('/immovable_applications_approved', [UserController::class, 'indexSelfImmovableApplicationsApproved']);
+            Route::get('/consumable_applications_applied', [UserController::class, 'indexSelfConsumableApplicationsApplied']);
+            Route::get('/consumable_applications_approved', [UserController::class, 'indexSelfConsumableApplicationsApproved']);
             Route::put('/', [UserController::class, 'updateSelf']);
             Route::delete('/session', [UserController::class, 'logout']);
         });

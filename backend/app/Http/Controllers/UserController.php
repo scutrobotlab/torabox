@@ -38,6 +38,82 @@ class UserController extends Controller
         ]);
     }
 
+    public function indexSelfNotificationCount()
+    {
+        return response()->json([
+            'notification_count' => [
+                'immovables_owned' => UserMid::$user->immovables_owned->count(),
+                'immovable_applications_applied' => UserMid::$user->immovable_applications_applied_pending->count(),
+                'immovable_applications_approved' => UserMid::$user->immovable_applications_approved_pending->count(),
+                'consumable_applications_applied' => UserMid::$user->consumable_applications_applied_pending->count(),
+                'consumable_applications_approved' => UserMid::$user->consumable_applications_approved_pending->count(),
+            ],
+        ]);
+    }
+
+    public function indexSelfImmovablesOwned()
+    {
+        return response()->json([
+            'immovables' => UserMid::$user->immovables_owned,
+        ]);
+    }
+
+    public function indexSelfImmovableApplicationsApplied(Request $request)
+    {
+        $immovables_applications = null;
+        if ($request->pending) {
+            $immovables_applications = UserMid::$user->immovable_applications_applied_pending;
+        } else {
+            $immovables_applications = UserMid::$user->immovable_applications_applied;
+        }
+
+        return response()->json([
+            'immovable_applications' => $immovables_applications->load(['immovable', 'applicant', 'approver']),
+        ]);
+    }
+
+    public function indexSelfImmovableApplicationsApproved(Request $request)
+    {
+        $immovables_applications = null;
+        if ($request->pending) {
+            $immovables_applications = UserMid::$user->immovable_applications_approved_pending;
+        } else {
+            $immovables_applications = UserMid::$user->immovable_applications_approved;
+        }
+
+        return response()->json([
+            'immovable_applications' => $immovables_applications->load(['immovable', 'applicant', 'approver']),
+        ]);
+    }
+
+    public function indexSelfConsumableApplicationsApplied(Request $request)
+    {
+        $consumable_applications = null;
+        if ($request->pending) {
+            $consumable_applications = UserMid::$user->consumable_applications_applied_pending;
+        } else {
+            $consumable_applications = UserMid::$user->consumable_applications_applied;
+        }
+
+        return response()->json([
+            'consumable_applications' => $consumable_applications->load(['consumable', 'applicant', 'approver']),
+        ]);
+    }
+
+    public function indexSelfConsumableApplicationsApproved(Request $request)
+    {
+        $consumable_applications = null;
+        if ($request->pending) {
+            $consumable_applications = UserMid::$user->consumable_applications_approved_pending;
+        } else {
+            $consumable_applications = UserMid::$user->consumable_applications_approved;
+        }
+
+        return response()->json([
+            'consumable_applications' => $consumable_applications->load(['consumable', 'applicant', 'approver']),
+        ]);
+    }
+
     public function indexSelf()
     {
         return response()->json([
