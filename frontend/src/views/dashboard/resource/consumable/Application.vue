@@ -3,7 +3,7 @@
     <ErrorAlert v-model="error" />
 
     <v-toolbar v-if="!loading">
-      <v-btn icon @click="$router.push('/dashboard/resource/consumable/' + $route.params.id)">
+      <v-btn icon @click="$router.go(-1)">
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
       <v-toolbar-title> {{ consumable.name }} 剩余：{{ consumable.number }} </v-toolbar-title>
