@@ -1,9 +1,9 @@
 <template>
   <v-dialog v-model="dialog" transition="dialog-bottom-transition" max-width="350">
     <v-card>
-      <v-toolbar dark dense>
+      <v-toolbar dense>
         <v-spacer />
-        <v-btn icon dark @click="dialog = false">
+        <v-btn icon @click="dialog = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar>
