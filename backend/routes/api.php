@@ -68,6 +68,7 @@ Route::middleware(UserMid::class)->group(function () {
         Route::prefix('/{id}')->group(function () {
             Route::get('/', [ImmovableController::class, 'index']);
             Route::get('/edit', [ImmovableController::class, 'edit']);
+            Route::put('/', [ImmovableController::class, 'update']);
             Route::delete('/', [ImmovableController::class, 'destroy']);
             Route::get('/applications', [ImmovableController::class, 'indexApplications']);
             Route::get('/approvers', [ImmovableController::class, 'indexApprovers']);
@@ -97,22 +98,12 @@ Route::middleware(UserMid::class)->group(function () {
         Route::delete('/{id}', [ImmovableApplicationController::class, 'destroy']);
     });
 
-    Route::prefix('/subscriptions')->group(function () {
-        Route::get('/', [SubscriptionController::class, 'list']);
-        Route::get('/{id}', [SubscriptionController::class, 'index']);
-        Route::get('/{id}/edit', [SubscriptionController::class, 'edit']);
-        Route::delete('/{id}', [SubscriptionController::class, 'destroy']);
-        Route::middleware(EnsureUserInGroup::class)->group(function () {
-            Route::post('/', [SubscriptionController::class, 'store']);
-            Route::put('/{id}', [SubscriptionController::class, 'update']);
-        });
-    });
-
     Route::prefix('/consumables')->group(function () {
         Route::get('/', [ConsumableController::class, 'list']);
         Route::prefix('/{id}')->group(function () {
             Route::get('/', [ConsumableController::class, 'index']);
             Route::get('/edit', [ConsumableController::class, 'edit']);
+            Route::put('/', [ConsumableController::class, 'update']);
             Route::delete('/', [ConsumableController::class, 'destroy']);
             Route::get('/applications', [ConsumableController::class, 'indexApplications']);
             Route::get('/purchases', [ConsumableController::class, 'indexPurchases']);
@@ -137,6 +128,17 @@ Route::middleware(UserMid::class)->group(function () {
         Route::post('/', [ConsumablePurchaseController::class, 'store']);
         Route::get('/{id}', [ConsumablePurchaseController::class, 'index']);
         Route::delete('/{id}', [ConsumableApplicationController::class, 'destroy']);
+    });
+
+    Route::prefix('/subscriptions')->group(function () {
+        Route::get('/', [SubscriptionController::class, 'list']);
+        Route::get('/{id}', [SubscriptionController::class, 'index']);
+        Route::get('/{id}/edit', [SubscriptionController::class, 'edit']);
+        Route::delete('/{id}', [SubscriptionController::class, 'destroy']);
+        Route::middleware(EnsureUserInGroup::class)->group(function () {
+            Route::post('/', [SubscriptionController::class, 'store']);
+            Route::put('/{id}', [SubscriptionController::class, 'update']);
+        });
     });
 });
 

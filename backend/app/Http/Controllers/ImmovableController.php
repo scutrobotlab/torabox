@@ -75,6 +75,27 @@ class ImmovableController extends Controller
         ]);
     }
 
+    public function update($id, Request $request)
+    {
+        $immovable = Immovable::findOrFail($id);
+        if ($immovable->user_id != UserMid::$user->id && !UserMid::$user->isGroupLeader($immovable->group->id)) {
+            return response()->json([
+                'message' => '需要负责人或者本组组长执行操作',
+            ], 403);
+        }
+
+        $immovable->name = $request->name;
+        if ($immovable->status == 0 || $immovable->status == -1) {
+            $immovable->status = $request->status;
+        }
+        $immovable->description = $request->description;
+        $immovable->save();
+
+        return response()->json([
+            'immovable' => $immovable,
+        ]);
+    }
+
     public function destroy($id)
     {
         $immovable = Immovable::findOrFail($id);

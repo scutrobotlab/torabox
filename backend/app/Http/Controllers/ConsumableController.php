@@ -84,6 +84,24 @@ class ConsumableController extends Controller
         ]);
     }
 
+    public function update($id, Request $request)
+    {
+        $consumable = Consumable::findOrFail($id);
+        if ($consumable->user_id != UserMid::$user->id && !UserMid::$user->isGroupLeader($consumable->group_id)) {
+            return response()->json([
+                'message' => '需要负责人或者本组组长执行操作',
+            ], 403);
+        }
+
+        $consumable->name = $request->name;
+        $consumable->description = $request->description;
+        $consumable->save();
+
+        return response()->json([
+            'consumable' => $consumable,
+        ]);
+    }
+
     public function destroy($id)
     {
         $consumable = Consumable::findOrFail($id);
