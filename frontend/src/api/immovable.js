@@ -38,3 +38,12 @@ export async function postImmovable(immovable) {
   });
   return resp.immovable;
 }
+
+export async function putImmovable(id, immovable) {
+  const resp = await fetchApi("/api/immovables/" + id, "PUT", {
+    name: immovable.name,
+    status: immovable.status,
+    description: immovable.description,
+  });
+  return resp.immovable;
+}

@@ -29,6 +29,13 @@
                 <v-list-item-title>购买</v-list-item-title>
               </v-list-item>
 
+              <v-list-item v-if="access" link @click="$refs.EditSheet.openSheet()">
+                <v-list-item-icon>
+                  <v-icon> mdi-pencil</v-icon>
+                </v-list-item-icon>
+                <v-list-item-title>编辑</v-list-item-title>
+              </v-list-item>
+
               <v-list-item link v-if="access" @click="dialog = true">
                 <v-list-item-icon>
                   <v-icon> mdi-delete</v-icon>
@@ -120,6 +127,8 @@
         </v-dialog>
       </v-card>
     </v-fade-transition>
+
+    <EditSheet v-if="!loading" :data="consumable" ref="EditSheet" @getConsumable="getConsumable" />
   </v-container>
 </template>
 
@@ -127,6 +136,7 @@
 import WaitProgress from "@/components/WaitProgress.vue";
 import ApplicationDialog from "@/components/consumable/ApplicationDialog.vue";
 import PurchaseDialog from "@/components/consumable/PurchaseDialog.vue";
+import EditSheet from "@/components/consumable/EditSheet.vue";
 import errorMixin from "@/mixins/errorMixin.js";
 import { getConsumableIndex, getConsumableIndexEdit, deleteConsumable } from "@/api/consumable.js";
 
@@ -136,6 +146,7 @@ export default {
     WaitProgress,
     ApplicationDialog,
     PurchaseDialog,
+    EditSheet,
   },
   data: () => ({
     show: false,

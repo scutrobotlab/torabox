@@ -8,7 +8,11 @@
           </v-btn>
           <v-toolbar-title>{{ immovable.name }}</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-menu offset-y transition="slide-y-transition">
+          <v-menu
+            offset-y
+            transition="slide-y-transition"
+            v-if="access || immovable.status == 0 || immovable.owner_id == user.id"
+          >
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon v-bind="attrs" v-on="on">
                 <v-icon>mdi-dots-vertical</v-icon>
@@ -35,6 +39,13 @@
                   <v-icon> mdi-cloud-upload </v-icon>
                 </v-list-item-icon>
                 <v-list-item-title>还回</v-list-item-title>
+              </v-list-item>
+
+              <v-list-item v-if="access" link @click="$refs.EditSheet.openSheet()">
+                <v-list-item-icon>
+                  <v-icon> mdi-pencil</v-icon>
+                </v-list-item-icon>
+                <v-list-item-title>编辑</v-list-item-title>
               </v-list-item>
 
               <v-list-item link v-if="access" @click="dialog = true">
@@ -124,12 +135,15 @@
         </v-dialog>
       </v-card>
     </v-fade-transition>
+
+    <EditSheet v-if="!loading" :data="immovable" ref="EditSheet" @getImmovable="getImmovable" />
   </v-container>
 </template>
 
 <script>
 import WaitProgress from "@/components/WaitProgress.vue";
 import ApplicationDialog from "@/components/immovable/ApplicationDialog.vue";
+import EditSheet from "@/components/immovable/EditSheet.vue";
 import errorMixin from "@/mixins/errorMixin.js";
 import { getImmovableIndex, getImmovableIndexEdit, deleteImmovable } from "@/api/immovable.js";
 
@@ -138,6 +152,7 @@ export default {
   components: {
     WaitProgress,
     ApplicationDialog,
+    EditSheet,
   },
   data: () => ({
     show: false,

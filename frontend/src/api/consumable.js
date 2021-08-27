@@ -43,3 +43,11 @@ export async function postConsumable(consumable) {
   });
   return resp.consumable;
 }
+
+export async function putConsumable(id, consumable) {
+  const resp = await fetchApi("/api/consumables/" + id, "PUT", {
+    name: consumable.name,
+    description: consumable.description,
+  });
+  return resp.consumable;
+}
