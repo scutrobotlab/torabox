@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Immovable extends Model
 {
@@ -32,6 +33,17 @@ class Immovable extends Model
     protected $appends = [
         'status_text',
     ];
+
+    public static function findIdorUuid($id)
+    {
+        $immovable = null;
+        if (Str::isUuid($id)) {
+            $immovable = Immovable::where('uuid', $id)->firstOrFail();
+        } else {
+            $immovable = Immovable::findOrFail($id);
+        }
+        return $immovable;
+    }
 
     public function user()
     {

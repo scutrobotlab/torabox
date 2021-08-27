@@ -35,7 +35,7 @@ class ConsumableController extends Controller
 
     public function index($id)
     {
-        $consumable = Consumable::findOrFail($id);
+        $consumable = Consumable::findIdorUuid($id);
         $consumable->group;
         $consumable->user;
 
@@ -46,7 +46,7 @@ class ConsumableController extends Controller
 
     public function indexApplications($id)
     {
-        $consumable = Consumable::findOrFail($id);
+        $consumable = Consumable::findIdorUuid($id);
         $consumable->applications->load(['applicant', 'approver']);
 
         return response()->json([
@@ -56,7 +56,7 @@ class ConsumableController extends Controller
 
     public function indexPurchases($id)
     {
-        $consumable = Consumable::findOrFail($id);
+        $consumable = Consumable::findIdorUuid($id);
         $consumable->purchases->load('user');
 
         return response()->json([
@@ -67,7 +67,7 @@ class ConsumableController extends Controller
 
     public function indexApprovers($id)
     {
-        $consumable = Consumable::findOrFail($id);
+        $consumable = Consumable::findIdorUuid($id);
         $consumable->approvers;
 
         return response()->json([
@@ -77,7 +77,7 @@ class ConsumableController extends Controller
 
     public function edit($id)
     {
-        $consumable = Consumable::findOrFail($id);
+        $consumable = Consumable::findIdorUuid($id);
 
         return response()->json([
             'access' => $consumable->user_id == UserMid::$user->id || UserMid::$user->isGroupLeader($consumable->group_id),
@@ -86,7 +86,7 @@ class ConsumableController extends Controller
 
     public function update($id, Request $request)
     {
-        $consumable = Consumable::findOrFail($id);
+        $consumable = Consumable::findIdorUuid($id);
         if ($consumable->user_id != UserMid::$user->id && !UserMid::$user->isGroupLeader($consumable->group_id)) {
             return response()->json([
                 'message' => '需要负责人或者本组组长执行操作',
@@ -104,7 +104,7 @@ class ConsumableController extends Controller
 
     public function destroy($id)
     {
-        $consumable = Consumable::findOrFail($id);
+        $consumable = Consumable::findIdorUuid($id);
         if ($consumable->user_id != UserMid::$user->id && !UserMid::$user->isGroupLeader($consumable->group_id)) {
             return response()->json([
                 'message' => '需要负责人或者本组组长执行操作',

@@ -26,9 +26,9 @@ class ConsumableApplicationController extends Controller
 
     public function store(ConsumableRecordForm $request)
     {
-        $consumable = Consumable::findOrFail($request->consumable_id);
+        $consumable = Consumable::findIdorUuid($request->consumable_id);
         $consumable_application = new ConsumableApplication();
-        $consumable_application->consumable_id = $request->consumable_id;
+        $consumable_application->consumable_id = $consumable->id;
         $consumable_application->applicant_id = UserMid::$user->id;
 
         if ($consumable->need_approval) {

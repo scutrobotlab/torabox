@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Consumable extends Model
 {
@@ -28,6 +29,17 @@ class Consumable extends Model
     protected $attributes = [
         'number' => 0,
     ];
+
+    public static function findIdorUuid($id)
+    {
+        $consumable = null;
+        if (Str::isUuid($id)) {
+            $consumable = Consumable::where('uuid', $id)->firstOrFail();
+        } else {
+            $consumable = Consumable::findOrFail($id);
+        }
+        return $consumable;
+    }
 
     public function user()
     {

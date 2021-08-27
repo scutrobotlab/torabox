@@ -35,7 +35,7 @@ class ImmovableController extends Controller
 
     public function index($id)
     {
-        $immovable = Immovable::findOrFail($id);
+        $immovable = Immovable::findIdorUuid($id);
         $immovable->kind;
         $immovable->group;
         $immovable->user;
@@ -48,7 +48,7 @@ class ImmovableController extends Controller
 
     public function indexApplications($id)
     {
-        $immovable = Immovable::findOrFail($id);
+        $immovable = Immovable::findIdorUuid($id);
         $immovable->applications->load(['applicant', 'approver']);
 
         return response()->json([
@@ -58,7 +58,7 @@ class ImmovableController extends Controller
 
     public function indexApprovers($id)
     {
-        $immovable = Immovable::findOrFail($id);
+        $immovable = Immovable::findIdorUuid($id);
         $immovable->approvers;
 
         return response()->json([
@@ -68,7 +68,7 @@ class ImmovableController extends Controller
 
     public function edit($id)
     {
-        $immovable = Immovable::findOrFail($id);
+        $immovable = Immovable::findIdorUuid($id);
 
         return response()->json([
             'access' => $immovable->user_id == UserMid::$user->id || UserMid::$user->isGroupLeader($immovable->group->id),
@@ -77,7 +77,7 @@ class ImmovableController extends Controller
 
     public function update($id, Request $request)
     {
-        $immovable = Immovable::findOrFail($id);
+        $immovable = Immovable::findIdorUuid($id);
         if ($immovable->user_id != UserMid::$user->id && !UserMid::$user->isGroupLeader($immovable->group->id)) {
             return response()->json([
                 'message' => '需要负责人或者本组组长执行操作',
@@ -98,7 +98,7 @@ class ImmovableController extends Controller
 
     public function destroy($id)
     {
-        $immovable = Immovable::findOrFail($id);
+        $immovable = Immovable::findIdorUuid($id);
         if ($immovable->user_id != UserMid::$user->id && !UserMid::$user->isGroupLeader($immovable->group->id)) {
             return response()->json([
                 'message' => '需要负责人或者本组组长执行操作',

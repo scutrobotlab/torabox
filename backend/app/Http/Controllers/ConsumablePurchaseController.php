@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\UserMid;
+use App\Models\Consumable;
 use App\Models\ConsumablePurchase;
 use Illuminate\Http\Request;
 use App\Http\Requests\ConsumableRecordForm;
@@ -18,8 +19,9 @@ class ConsumablePurchaseController extends Controller
 
     public function store(ConsumableRecordForm $request)
     {
+        $consumable = Consumable::findIdorUuid($request->consumable_id);
         $consumable_purchase = new ConsumablePurchase();
-        $consumable_purchase->consumable_id = $request->consumable_id;
+        $consumable_purchase->consumable_id = $consumable->id;
         $consumable_purchase->user_id = UserMid::$user->id;
         $consumable_purchase->number = $request->number;
         $consumable_purchase->description = $request->description;

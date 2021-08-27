@@ -26,7 +26,6 @@ class ConsumableRecordForm extends FormRequest
     public function rules()
     {
         return [
-            'consumable_id' => 'required|exists:App\Models\Consumable,id',
             'number' => 'required|integer',
         ];
     }
@@ -34,8 +33,6 @@ class ConsumableRecordForm extends FormRequest
     public function messages()
     {
         return [
-            'consumable_id.required' => '缺少消耗品',
-            'consumable_id.exists' => '消耗品不存在',
             'number.required' => '缺少数量',
             'number.integer' => '数量必须为整数',
         ];

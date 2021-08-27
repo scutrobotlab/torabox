@@ -25,9 +25,9 @@ class ImmovableApplicationController extends Controller
 
     public function store(Request $request)
     {
-        $immovable = Immovable::findOrFail($request->immovable_id);
+        $immovable = Immovable::findIdorUuid($request->immovable_id);
         $immovable_application = new ImmovableApplication();
-        $immovable_application->immovable_id = $request->immovable_id;
+        $immovable_application->immovable_id = $immovable->id;
         $immovable_application->applicant_id = UserMid::$user->id;
 
         if ($immovable->need_approval) {
