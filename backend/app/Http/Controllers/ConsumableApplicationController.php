@@ -7,14 +7,20 @@ use App\Http\Requests\ConsumableRecordForm;
 use App\Models\Consumable;
 use App\Models\ConsumableApplication;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 
 class ConsumableApplicationController extends Controller
 {
     public function list()
     {
         return response()->json([
-            'consumable_applications' => ConsumableApplication::all()->load(['consumable', 'applicant', 'approver']),
+            'consumable_applications' => ConsumableApplication::paginate()->load(['consumable', 'applicant', 'approver']),
+        ]);
+    }
+
+    public function paginationLength()
+    {
+        return response()->json([
+            'pagination_length' => ConsumableApplication::paginate()->lastPage(),
         ]);
     }
 

@@ -13,6 +13,7 @@ class ImmovableApplication extends Model
     protected $table = 'immovable_applications';
     protected $primaryKey = 'id';
     public $timestamps = true;
+    protected $perPage = 7;
     protected $fillable = [
         'immovable_id',
         'applicant_id',

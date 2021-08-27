@@ -13,6 +13,7 @@ class ConsumableApplication extends Model
     protected $table = 'consumable_applications';
     protected $primaryKey = 'id';
     public $timestamps = true;
+    protected $perPage = 7;
     protected $fillable = [
         'consumable_id',
         'applicant_id',

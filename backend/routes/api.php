@@ -91,6 +91,7 @@ Route::middleware(UserMid::class)->group(function () {
 
     Route::prefix('/immovable_applications')->group(function () {
         Route::get('/', [ImmovableApplicationController::class, 'list']);
+        Route::get('/pagination_length', [ImmovableApplicationController::class, 'paginationLength']);
         Route::post('/', [ImmovableApplicationController::class, 'store']);
         Route::get('/{id}', [ImmovableApplicationController::class, 'index']);
         Route::get('/{id}/edit', [ImmovableApplicationController::class, 'edit']);
@@ -116,6 +117,7 @@ Route::middleware(UserMid::class)->group(function () {
 
     Route::prefix('/consumable_applications')->group(function () {
         Route::get('/', [ConsumableApplicationController::class, 'list']);
+        Route::get('/pagination_length', [ConsumableApplicationController::class, 'paginationLength']);
         Route::post('/', [ConsumableApplicationController::class, 'store']);
         Route::get('/{id}', [ConsumableApplicationController::class, 'index']);
         Route::get('/{id}/edit', [ConsumableApplicationController::class, 'edit']);
