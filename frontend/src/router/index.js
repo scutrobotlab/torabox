@@ -355,7 +355,7 @@ const routes = [
                 "@/views/dashboard/account/immovable/Main.vue"
               ),
             meta: {
-              title: "我的不动产",
+              title: "不动产",
             },
             children: [
               {
@@ -366,7 +366,9 @@ const routes = [
                     "@/views/dashboard/account/immovable/Owned.vue"
                   ),
                 meta: {
-                  title: "我的拥有的物资",
+                  title: "我拥有的物资",
+                  badgeKey: "immovables_owned",
+                  badgeColor: "blue",
                 },
               },
               {
@@ -378,6 +380,8 @@ const routes = [
                   ),
                 meta: {
                   title: "我发起的申请",
+                  badgeKey: "immovable_applications_applied",
+                  badgeColor: "green",
                 },
               },
               {
@@ -389,6 +393,8 @@ const routes = [
                   ),
                 meta: {
                   title: "我审核的申请",
+                  badgeKey: "immovable_applications_approved",
+                  badgeColor: "red",
                 },
               },
             ],
@@ -401,7 +407,7 @@ const routes = [
                 "@/views/dashboard/account/consumable/Main.vue"
               ),
             meta: {
-              title: "我的消耗品",
+              title: "消耗品",
             },
             children: [
               {
@@ -413,6 +419,8 @@ const routes = [
                   ),
                 meta: {
                   title: "我发起的申请",
+                  badgeKey: "consumable_applications_applied",
+                  badgeColor: "green",
                 },
               },
               {
@@ -424,6 +432,8 @@ const routes = [
                   ),
                 meta: {
                   title: "我审核的申请",
+                  badgeKey: "consumable_applications_approved",
+                  badgeColor: "red",
                 },
               },
             ],

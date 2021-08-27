@@ -51,7 +51,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col v-if="user.groups" cols="12" sm="6" md="6">
+            <v-col cols="12" sm="6" md="6">
               <v-select
                 :items="kinds"
                 item-text="name"

@@ -9,6 +9,8 @@
         </v-btn>
       </template>
     </v-snackbar>
+
+    <WaitProgress v-if="loading" class="ma-7" />
     <v-fade-transition>
       <v-card v-if="!loading">
         <v-card-text :class="snackbar ? 'pt-12' : ''">
@@ -22,51 +24,24 @@
       </v-card>
     </v-fade-transition>
 
+    <WaitProgress v-if="loading" class="ma-7" />
     <v-fade-transition>
       <v-card class="mt-3" v-if="notification_count">
-        <v-list>
-          <v-subheader>不动产</v-subheader>
-          <v-list-item to="/dashboard/account/immovable/owned">
+        <v-list v-for="r in routes" :key="r.key">
+          <v-subheader>{{ r.meta.title }}</v-subheader>
+          <v-list-item
+            v-for="c in r.children"
+            :key="c.key"
+            :to="`/dashboard/account/${r.path}/${c.path}`"
+          >
             <v-list-item-content>
               <v-list-item-title>
                 <v-badge
-                  :value="notification_count.immovables_owned"
-                  color="blue"
-                  :content="notification_count.immovables_owned"
+                  :value="notification_count[c.meta.badgeKey]"
+                  :color="c.meta.badgeColor"
+                  :content="notification_count[c.meta.badgeKey]"
                 >
-                  我拥有的物资
-                </v-badge>
-              </v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-action>
-              <v-icon>mdi-chevron-right</v-icon>
-            </v-list-item-action>
-          </v-list-item>
-          <v-list-item to="/dashboard/account/immovable/application_applied">
-            <v-list-item-content>
-              <v-list-item-title>
-                <v-badge
-                  :value="notification_count.immovable_applications_applied"
-                  color="green"
-                  :content="notification_count.immovable_applications_applied"
-                >
-                  我发起的申请
-                </v-badge>
-              </v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-action>
-              <v-icon>mdi-chevron-right</v-icon>
-            </v-list-item-action>
-          </v-list-item>
-          <v-list-item to="/dashboard/account/immovable/application_approved">
-            <v-list-item-content>
-              <v-list-item-title>
-                <v-badge
-                  :value="notification_count.immovable_applications_approved"
-                  color="red"
-                  :content="notification_count.immovable_applications_approved"
-                >
-                  我审核的申请
+                  {{ c.meta.title }}
                 </v-badge>
               </v-list-item-title>
             </v-list-item-content>
@@ -75,39 +50,6 @@
             </v-list-item-action>
           </v-list-item>
           <v-divider />
-          <v-subheader>消耗品</v-subheader>
-          <v-list-item to="/dashboard/account/consumable/application_applied">
-            <v-list-item-content>
-              <v-list-item-title>
-                <v-badge
-                  :value="notification_count.consumable_applications_applied"
-                  color="green"
-                  :content="notification_count.consumable_applications_applied"
-                >
-                  我发起的申请
-                </v-badge>
-              </v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-action>
-              <v-icon>mdi-chevron-right</v-icon>
-            </v-list-item-action>
-          </v-list-item>
-          <v-list-item to="/dashboard/account/consumable/application_approved">
-            <v-list-item-content>
-              <v-list-item-title>
-                <v-badge
-                  :value="notification_count.consumable_applications_approved"
-                  color="red"
-                  :content="notification_count.consumable_applications_approved"
-                >
-                  我审核的申请
-                </v-badge>
-              </v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-action>
-              <v-icon>mdi-chevron-right</v-icon>
-            </v-list-item-action>
-          </v-list-item>
         </v-list>
       </v-card>
     </v-fade-transition>
@@ -115,6 +57,7 @@
 </template>
 
 <script>
+import WaitProgress from "@/components/WaitProgress.vue";
 import UserProfileList from "@/components/UserProfileList.vue";
 import errorMixin from "@/mixins/errorMixin.js";
 import { getUserSelfNotificationCount } from "@/api/user.js";
@@ -122,6 +65,7 @@ import { getUserSelfNotificationCount } from "@/api/user.js";
 export default {
   mixins: [errorMixin],
   components: {
+    WaitProgress,
     UserProfileList,
   },
   data: () => ({
@@ -134,14 +78,13 @@ export default {
       return this.$store.state.user;
     },
     routes() {
-      const r = this.$router.options.routes.find((route) => route.path === "/account");
-      return r.children.filter((c) => c.meta != null);
+      const r = this.$router.options.routes.find((route) => route.path === "/dashboard");
+      const c = r.children.filter((c) => c.path === "account");
+      return c[0].children.filter((c) => c.path !== "");
     },
   },
   async created() {
     this.notification_count = await this.errorHandler(getUserSelfNotificationCount());
-  },
-  mounted() {
     this.loading = false;
   },
   methods: {
