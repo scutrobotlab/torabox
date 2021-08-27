@@ -28,6 +28,7 @@ export default new Vuex.Store({
   getters: {
     searchImmovables: (state) => (keyword) => {
       if (keyword == "") return [];
+      if (!state.immovables) return [];
       return state.immovables.filter(function(product) {
         return Object.keys(product).some(function(key) {
           return (
@@ -40,6 +41,7 @@ export default new Vuex.Store({
     },
     searchConsumables: (state) => (keyword) => {
       if (keyword == "") return [];
+      if (!state.consumables) return [];
       return state.consumables.filter(function(product) {
         return Object.keys(product).some(function(key) {
           return (
@@ -52,6 +54,7 @@ export default new Vuex.Store({
     },
     searchSubscriptions: (state) => (keyword) => {
       if (keyword == "") return [];
+      if (!state.subscriptions) return [];
       return state.subscriptions.filter(function(product) {
         return Object.keys(product).some(function(key) {
           return (
