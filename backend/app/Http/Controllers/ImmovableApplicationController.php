@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\UserMid;
+use App\Mail\ImmovableApply;
+use App\Mail\ImmovableApprove;
 use App\Models\Immovable;
 use App\Models\ImmovableApplication;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ImmovableApplicationController extends Controller
 {
@@ -53,6 +56,10 @@ class ImmovableApplicationController extends Controller
         $immovable_application->description = $request->description;
         $immovable_application->save();
         $immovable_application->updateImmovable();
+
+        if ($immovable->need_approval) {
+            Mail::to($immovable_application->approver->email)->send(new ImmovableApply($immovable_application));
+        }
 
         return response()->json([
             'immovable_application' => $immovable_application,
@@ -114,6 +121,8 @@ class ImmovableApplicationController extends Controller
         $immovable_application->description = $request->description;
         $immovable_application->save();
         $immovable_application->updateImmovable();
+
+        Mail::to($immovable_application->applicant->email)->send(new ImmovableApprove($immovable_application));
 
         return response()->json([
             'immovable_application' => $immovable_application,

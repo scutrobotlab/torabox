@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\UserMid;
 use App\Http\Requests\ConsumableRecordForm;
+use App\Mail\ConsumableApply;
+use App\Mail\ConsumableApprove;
 use App\Models\Consumable;
 use App\Models\ConsumableApplication;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ConsumableApplicationController extends Controller
 {
@@ -49,6 +52,10 @@ class ConsumableApplicationController extends Controller
         $consumable_application->description = $request->description;
         $consumable_application->save();
         $consumable_application->updateConsumable();
+
+        if ($consumable->need_approval) {
+            Mail::to($consumable_application->approver->email)->send(new ConsumableApply($consumable_application));
+        }
 
         return response()->json([
             'consumable_application' => $consumable_application,
@@ -106,6 +113,8 @@ class ConsumableApplicationController extends Controller
         $consumable_application->description = $request->description;
         $consumable_application->save();
         $consumable_application->updateConsumable();
+
+        Mail::to($consumable_application->applicant->email)->send(new ConsumableApprove($consumable_application));
 
         return response()->json([
             'consumable_application' => $consumable_application,
