@@ -33,7 +33,7 @@
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item>
+          <v-list-item v-if="consumable_application.consumable.need_approval">
             <v-list-item-content>
               <v-list-item-title>
                 审核人：{{ consumable_application.approver.name }}

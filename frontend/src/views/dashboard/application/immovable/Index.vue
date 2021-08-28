@@ -28,7 +28,7 @@
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item>
+          <v-list-item v-if="immovable_application.immovable.need_approval">
             <v-list-item-content>
               <v-list-item-title>
                 审核人：{{ immovable_application.approver.name }}
