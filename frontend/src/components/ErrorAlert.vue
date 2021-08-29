@@ -6,10 +6,12 @@
           <div :class="!critical || 'title'">{{ title }}</div>
           <div v-if="critical">错误代码：{{ error.status }}</div>
         </v-col>
-        <v-col class="shrink" @click="action" :class="critical || 'py-0'">
-          <v-btn outlined color="error" v-if="!critical && action_text">{{ action_text }}</v-btn>
-          <v-btn icon color="error" v-else>
-            <v-icon @click="close">mdi-close-circle</v-icon>
+        <v-col class="shrink" :class="critical || 'py-0'">
+          <v-btn outlined color="error" v-if="critical && action_text" @click="action">
+            {{ action_text }}
+          </v-btn>
+          <v-btn icon color="error" v-else @click="close">
+            <v-icon>mdi-close-circle</v-icon>
           </v-btn>
         </v-col>
       </v-row>
@@ -24,7 +26,7 @@ export default {
     event: "close",
   },
   props: {
-    error: { Type: Object },
+    error: Object,
     critical: Boolean,
   },
   computed: {
