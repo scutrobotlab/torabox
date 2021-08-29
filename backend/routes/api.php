@@ -153,3 +153,9 @@ Route::middleware(FakeMid::class)->group(function () {
         Route::get('/{id}', [UserController::class, 'fakeIndex']);
     });
 });
+
+Route::get('/{any}', function () {
+    return response()->json([
+        'message' => 'Not found',
+    ], 404);
+})->where('any', '.*');
