@@ -12,7 +12,7 @@ class SubscriptionController extends Controller
     public function list(Request $request)
     {
         return response()->json([
-            'subscriptions' => Subscription::all(),
+            'subscriptions' => Subscription::all()->load('user'),
         ]);
     }
 

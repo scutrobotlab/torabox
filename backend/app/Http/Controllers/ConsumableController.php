@@ -13,7 +13,7 @@ class ConsumableController extends Controller
     public function list()
     {
         return response()->json([
-            'consumables' => Consumable::all(),
+            'consumables' => Consumable::all()->load('user'),
         ]);
     }
 

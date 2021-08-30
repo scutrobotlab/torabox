@@ -13,7 +13,7 @@ class ImmovableController extends Controller
     public function list()
     {
         return response()->json([
-            'immovables' => Immovable::all(),
+            'immovables' => Immovable::all()->load('user'),
         ]);
     }
 
