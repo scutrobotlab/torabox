@@ -12,20 +12,14 @@
     <WaitProgress v-if="loading" class="ma-7" />
 
     <v-fade-transition>
-      <v-list v-if="!loading">
-        <v-list-item v-for="purchase in consumable.purchases" :key="purchase.id">
-          <v-list-item-content>
-            <v-list-item-title v-text="purchase.user.name"></v-list-item-title>
-            <v-list-item-subtitle> 购买数量： {{ purchase.number }} </v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+      <PurchaseList :purchases="consumable.purchases" v-if="!loading" />
     </v-fade-transition>
   </v-container>
 </template>
 
 <script>
 import WaitProgress from "@/components/WaitProgress.vue";
+import PurchaseList from "@/components/consumable/PurchaseList.vue";
 import errorMixin from "@/mixins/errorMixin.js";
 import { getConsumableIndexPurchases } from "@/api/consumable.js";
 
@@ -33,6 +27,7 @@ export default {
   mixins: [errorMixin],
   components: {
     WaitProgress,
+    PurchaseList,
   },
   data: () => ({
     loading: true,
