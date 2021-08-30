@@ -1,10 +1,10 @@
 <template>
   <v-main>
-    <v-app-bar app dark color="primary">
+    <v-app-bar app color="primary">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
       <template v-slot:extension v-if="subRoutes">
-        <v-tabs background-color="primary" grow dark>
+        <v-tabs background-color="primary" grow>
           <v-tab
             v-for="r in subRoutes"
             :key="r.key"

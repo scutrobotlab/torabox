@@ -50,7 +50,6 @@
               :loading="updating"
               :disabled="updating"
               v-if="access"
-              dark
               @click="updateImmovableApplication(1)"
             >
               同意
@@ -60,7 +59,6 @@
               :loading="updating"
               :disabled="updating"
               v-if="access"
-              dark
               @click="updateImmovableApplication(-1)"
             >
               拒绝

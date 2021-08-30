@@ -2,10 +2,10 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
-        <v-toolbar dense dark color="primary">
+        <v-toolbar dense color="primary">
           <v-toolbar-title>新增申请</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-btn icon dark @click="dialog = false">
+          <v-btn icon @click="dialog = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-toolbar>

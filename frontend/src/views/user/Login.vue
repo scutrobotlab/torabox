@@ -7,7 +7,7 @@
         <v-col cols="12" sm="8" md="4">
           <v-alert type="warning"> 测试环境登录 </v-alert>
           <v-card class="elevation-12">
-            <v-tabs v-model="tab" fixed-tabs background-color="primary" dark icons-and-text>
+            <v-tabs v-model="tab" fixed-tabs background-color="primary" icons-and-text>
               <v-tabs-slider color="secondary"></v-tabs-slider>
               <v-tab href="#tab-login">
                 统一认证

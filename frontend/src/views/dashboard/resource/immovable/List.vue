@@ -12,11 +12,10 @@
         bottom
         right
         fixed
-        dark
         transition="slide-y-reverse-transition"
       >
         <template v-slot:activator>
-          <v-btn v-model="fab" color="secondary" dark fab>
+          <v-btn v-model="fab" color="secondary" fab>
             <v-icon v-if="fab"> mdi-close </v-icon>
             <v-icon v-else> mdi-plus </v-icon>
           </v-btn>

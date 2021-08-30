@@ -7,17 +7,17 @@
     max-width="600px"
   >
     <v-card>
-      <v-toolbar dark color="primary">
+      <v-toolbar color="primary">
         <v-toolbar-title>新增不动产分类</v-toolbar-title>
         <v-spacer />
-        <v-btn icon dark @click="dialog = false">
+        <v-btn icon @click="dialog = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar>
       <v-card-text class="pt-7">
         <ErrorAlert v-model="error" />
 
-        <v-alert text dense color="success" dark v-model="alert" transition="scale-transition">
+        <v-alert text dense color="success" v-model="alert" transition="scale-transition">
           <v-row align="center">
             <v-col class="grow"> 添加完成 </v-col>
             <v-col class="shrink">
@@ -61,7 +61,6 @@
             :loading="loading"
             :disabled="!valid || disabled"
             block
-            dark
             @click="save"
           >
             保存

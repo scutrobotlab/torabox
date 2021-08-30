@@ -1,10 +1,10 @@
 <template>
   <v-bottom-sheet scrollable v-model="sheet" :inset="!$vuetify.breakpoint.mobile">
     <v-card>
-      <v-toolbar dark>
+      <v-toolbar>
         <v-toolbar-title>编辑订阅类</v-toolbar-title>
         <v-spacer />
-        <v-btn icon dark @click="sheet = false">
+        <v-btn icon @click="sheet = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar>
@@ -77,7 +77,6 @@
             :loading="loading"
             :disabled="!valid || disabled"
             block
-            dark
             @click="save"
           >
             保存

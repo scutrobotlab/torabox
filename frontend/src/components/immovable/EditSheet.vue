@@ -49,7 +49,6 @@
             :loading="loading"
             :disabled="!valid || disabled"
             block
-            dark
             @click="save"
           >
             保存

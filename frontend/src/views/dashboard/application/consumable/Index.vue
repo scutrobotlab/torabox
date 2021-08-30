@@ -55,7 +55,6 @@
               :loading="updating"
               :disabled="updating"
               v-if="access"
-              dark
               @click="updateConsumableApplication(1)"
             >
               同意
@@ -65,7 +64,6 @@
               :loading="updating"
               :disabled="updating"
               v-if="access"
-              dark
               @click="updateConsumableApplication(-1)"
             >
               拒绝
