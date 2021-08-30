@@ -11,7 +11,7 @@
           {{ application.action == "lend" ? "借出" : "还回" }}
           {{ application.immovable == null ? "" : application.immovable.name }}
         </v-list-item-title>
-        <v-list-item-subtitle> 申请于{{ fromNow(application.created_at) }} </v-list-item-subtitle>
+        <v-list-item-subtitle> 申请于 {{ fromNow(application.created_at) }} </v-list-item-subtitle>
       </v-list-item-content>
       <v-list-item-action>
         <v-list-item-action-text v-if="application.status == 1" class="green--text">

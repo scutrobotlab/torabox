@@ -7,10 +7,10 @@
     >
       <v-list-item-content>
         <v-list-item-title>
-          {{ application.applicant.name }} 申请 {{ application.number }}
-          {{ application.consumable == null ? "个" : application.consumable.name }}
+          {{ application.applicant.name }} 申请 {{ application.number }} 个
+          {{ application.consumable == null ? "" : application.consumable.name }}
         </v-list-item-title>
-        <v-list-item-subtitle>申请于{{ fromNow(application.created_at) }} </v-list-item-subtitle>
+        <v-list-item-subtitle>申请于 {{ fromNow(application.created_at) }} </v-list-item-subtitle>
       </v-list-item-content>
       <v-list-item-action>
         <v-list-item-action-text v-if="application.status == 1" class="green--text">
