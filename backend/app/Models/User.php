@@ -49,7 +49,7 @@ class User extends Model
 
     public function immovables_owned()
     {
-        return $this->hasMany(Immovable::class, 'owner_id');
+        return $this->hasMany(Immovable::class, 'owner_id')->with('user');
     }
 
     public function immovable_applications_applied()
