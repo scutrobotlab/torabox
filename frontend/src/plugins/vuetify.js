@@ -8,14 +8,14 @@ export default new Vuetify({
   theme: {
     themes: {
       light: {
-        primary: colors.purple.lighten1,
-        secondary: colors.pink.lighten1,
-        accent: colors.deepPurple.accent1,
+        primary: colors.orange.lighten2,
+        secondary: colors.blue.lighten1,
+        accent: colors.pink.accent2,
       },
       dark: {
-        primary: colors.purple.darken3,
-        secondary: colors.pink.darken3,
-        accent: colors.deepPurple.accent3,
+        primary: colors.purple.lighten1,
+        secondary: colors.cyan.lighten1,
+        accent: colors.teal.accent2,
       },
     },
   },
