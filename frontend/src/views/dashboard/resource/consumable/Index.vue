@@ -165,8 +165,8 @@ export default {
     this.loading = true;
     this.errorHandler(Promise.all([this.checkAccess(), this.getConsumable()])).finally(() => {
       this.loading = false;
+      this.qrcodeContent = window.location.origin + "/consumable/" + this.consumable.uuid;
     });
-    this.qrcodeContent = window.location.origin + "/consumable/" + this.consumable.uuid;
   },
   mounted() {
     this.show = true;

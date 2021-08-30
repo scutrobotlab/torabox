@@ -171,8 +171,8 @@ export default {
     this.loading = true;
     this.errorHandler(Promise.all([this.checkAccess(), this.getImmovable()])).finally(() => {
       this.loading = false;
+      this.qrcodeContent = window.location.origin + "/immovable/" + this.immovable.uuid;
     });
-    this.qrcodeContent = window.location.origin + "/immovable/" + this.immovable.uuid;
   },
   mounted() {
     this.show = true;
