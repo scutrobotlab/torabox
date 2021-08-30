@@ -6,15 +6,12 @@
       :to="`/dashboard/application/immovable/${application.id}`"
     >
       <v-list-item-content>
-        <v-list-item-title v-text="application.applicant.name"></v-list-item-title>
-        <v-list-item-subtitle>
-          {{
-            "申请 " +
-              (application.action == "lend" ? "借出" : "还回") +
-              " " +
-              application.immovable.name
-          }}
-        </v-list-item-subtitle>
+        <v-list-item-title>
+          {{ application.applicant.name }} 申请
+          {{ application.action == "lend" ? "借出" : "还回" }}
+          {{ application.immovable == null ? "" : application.immovable.name }}
+        </v-list-item-title>
+        <v-list-item-subtitle> 申请于{{ fromNow(application.created_at) }} </v-list-item-subtitle>
       </v-list-item-content>
       <v-list-item-action>
         <v-list-item-action-text v-if="application.status == 1" class="green--text">
@@ -22,6 +19,9 @@
         </v-list-item-action-text>
         <v-list-item-action-text v-else-if="application.status == -1" class="red--text">
           <v-icon small color="error">mdi-close-circle-outline</v-icon> 已拒绝
+        </v-list-item-action-text>
+        <v-list-item-action-text v-else class="accent--text">
+          <v-icon small color="accent">mdi-alert-circle-outline</v-icon> 待审核
         </v-list-item-action-text>
       </v-list-item-action>
       <v-list-item-action>
@@ -32,8 +32,12 @@
 </template>
 
 <script>
+import { fromNow } from "@/utils/moment";
 export default {
   props: ["applications"],
+  methods: {
+    fromNow,
+  },
 };
 </script>
 
