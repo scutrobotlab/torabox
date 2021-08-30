@@ -7,9 +7,12 @@
       :to="`/dashboard/resource/subscription/${subscription.id}`"
     >
       <v-list-item-content>
-        <v-list-item-title v-text="subscription.name"></v-list-item-title>
-        <v-list-item-subtitle>到期时间：{{ subscription.end_time }}</v-list-item-subtitle>
+        <v-list-item-title>{{ subscription.name }}</v-list-item-title>
+        <v-list-item-subtitle>负责人： {{ subscription.user.name }}</v-list-item-subtitle>
       </v-list-item-content>
+      <v-list-item-action>
+        <v-list-item-action-text>到期时间：{{ subscription.end_time }}</v-list-item-action-text>
+      </v-list-item-action>
       <v-list-item-action>
         <v-icon>mdi-chevron-right</v-icon>
       </v-list-item-action>
