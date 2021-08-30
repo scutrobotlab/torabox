@@ -86,13 +86,20 @@
           </v-row>
           <v-row>
             <v-col cols="12" sm="12" md="12">
-              <v-textarea label="描述" v-model="consumable.description" required></v-textarea>
+              <v-textarea label="描述" v-model="consumable.description"></v-textarea>
             </v-col>
           </v-row>
         </v-form>
 
         <v-card-actions>
-          <v-btn color="primary" :loading="loading" :disabled="disabled" block dark @click="save">
+          <v-btn
+            color="primary"
+            :loading="loading"
+            :disabled="!valid || disabled"
+            block
+            dark
+            @click="save"
+          >
             保存
           </v-btn>
         </v-card-actions>
@@ -132,13 +139,20 @@ export default {
     this.hidden = false;
   },
   methods: {
-    async save() {
+    save() {
       this.loading = true;
       this.disabled = true;
-      await this.errorHandler(postConsumable(this.consumable));
-      this.$store.dispatch("getConsumables");
-      this.loading = false;
-      this.alert = true;
+      this.errorHandler(postConsumable(this.consumable))
+        .then(() => {
+          this.$store.dispatch("getConsumables");
+          this.alert = true;
+        })
+        .catch(() => {
+          this.disabled = false;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     continueNew() {
       this.alert = false;

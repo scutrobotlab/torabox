@@ -118,7 +118,7 @@ export default {
   }),
   created() {
     this.loading = true;
-    Promise.all([this.checkAccess(), this.getSubscription()]).finally(() => {
+    this.errorHandler(Promise.all([this.checkAccess(), this.getSubscription()])).finally(() => {
       this.loading = false;
     });
   },
@@ -140,13 +140,19 @@ export default {
     async getSubscription() {
       this.subscription = await this.errorHandler(getSubscriptionIndex(this.$route.params.id));
     },
-    async remove() {
+    remove() {
       this.removing = true;
-      await this.errorHandler(deleteSubscription(this.$route.params.id));
-      await this.$store.dispatch("getSubscriptions");
-      this.dialog = false;
-      this.removing = false;
-      this.$router.push("/dashboard/resource/subscription");
+      this.errorHandler(deleteSubscription(this.$route.params.id))
+        .then(() => {
+          this.$store.dispatch("getSubscriptions");
+          this.dialog = false;
+          this.removing = false;
+          this.$router.push("/dashboard/resource/subscription");
+        })
+        .catch(() => {
+          this.dialog = false;
+          this.removing = false;
+        });
     },
   },
 };

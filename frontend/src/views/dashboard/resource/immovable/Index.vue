@@ -167,9 +167,9 @@ export default {
     immovable: null,
     qrcodeContent: "",
   }),
-  async created() {
+  created() {
     this.loading = true;
-    await Promise.all([this.checkAccess(), this.getImmovable()]).finally(() => {
+    this.errorHandler(Promise.all([this.checkAccess(), this.getImmovable()])).finally(() => {
       this.loading = false;
     });
     this.qrcodeContent = window.location.origin + "/immovable/" + this.immovable.uuid;
@@ -192,13 +192,19 @@ export default {
     async getImmovable() {
       this.immovable = await this.errorHandler(getImmovableIndex(this.$route.params.id));
     },
-    async remove() {
+    remove() {
       this.removing = true;
-      await this.errorHandler(deleteImmovable(this.$route.params.id));
-      await this.$store.dispatch("getImmovables");
-      this.dialog = false;
-      this.removing = false;
-      this.$router.push("/dashboard/resource/immovable");
+      this.errorHandler(deleteImmovable(this.$route.params.id))
+        .then(() => {
+          this.$store.dispatch("getImmovables");
+          this.dialog = false;
+          this.removing = false;
+          this.$router.push("/dashboard/resource/immovable");
+        })
+        .catch(() => {
+          this.dialog = false;
+          this.removing = false;
+        });
     },
   },
 };

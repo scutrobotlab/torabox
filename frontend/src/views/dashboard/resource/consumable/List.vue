@@ -27,8 +27,8 @@ export default {
   data: () => ({
     loading: true,
   }),
-  async created() {
-    await this.$store.dispatch("getConsumables");
+  created() {
+    this.$store.dispatch("getConsumables");
   },
   mounted() {
     this.loading = false;

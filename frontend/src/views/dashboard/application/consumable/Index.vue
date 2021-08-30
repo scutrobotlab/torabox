@@ -105,9 +105,11 @@ export default {
   }),
   created() {
     this.loading = true;
-    Promise.all([this.checkAccess(), this.getConsumableApplication()]).finally(() => {
-      this.loading = false;
-    });
+    this.errorHandler(Promise.all([this.checkAccess(), this.getConsumableApplication()])).finally(
+      () => {
+        this.loading = false;
+      }
+    );
   },
   computed: {
     user() {
@@ -130,14 +132,18 @@ export default {
     },
     async updateConsumableApplication(status) {
       this.updating = true;
-      await this.errorHandler(
+      this.errorHandler(
         putConsumableApplication(this.$route.params.id, {
           status,
           description: this.consumable_application.description,
         })
-      );
-      await this.getConsumableApplication();
-      this.updating = false;
+      )
+        .then(async () => {
+          await this.getConsumableApplication();
+        })
+        .finally(() => {
+          this.updating = false;
+        });
     },
   },
 };

@@ -66,13 +66,20 @@
           </v-row>
           <v-row>
             <v-col cols="12" sm="12" md="12">
-              <v-textarea label="描述" v-model="subscription.description" required></v-textarea>
+              <v-textarea label="描述" v-model="subscription.description"></v-textarea>
             </v-col>
           </v-row>
         </v-form>
 
         <v-card-actions>
-          <v-btn color="primary" :loading="loading" :disabled="disabled" block dark @click="save">
+          <v-btn
+            color="primary"
+            :loading="loading"
+            :disabled="!valid || disabled"
+            block
+            dark
+            @click="save"
+          >
             保存
           </v-btn>
         </v-card-actions>
@@ -110,14 +117,18 @@ export default {
     },
   },
   methods: {
-    async save() {
+    save() {
       this.loading = true;
       this.disabled = true;
-      await this.errorHandler(putSubscription(this.subscription.id, this.subscription));
-      this.$emit("getSubscription");
-      this.loading = false;
-      this.disabled = false;
-      this.sheet = false;
+      this.errorHandler(putSubscription(this.subscription.id, this.subscription))
+        .then(() => {
+          this.$emit("getSubscription");
+          this.sheet = false;
+        })
+        .finally(() => {
+          this.loading = false;
+          this.disabled = false;
+        });
     },
     openSheet() {
       this.subscription = this.data;

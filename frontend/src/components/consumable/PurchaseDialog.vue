@@ -30,11 +30,7 @@
               </v-row>
               <v-row>
                 <v-col cols="12" sm="12" md="12">
-                  <v-textarea
-                    label="描述"
-                    v-model="consumable_purchase.description"
-                    required
-                  ></v-textarea>
+                  <v-textarea label="描述" v-model="consumable_purchase.description"></v-textarea>
                 </v-col>
               </v-row>
             </v-form>
@@ -78,13 +74,17 @@ export default {
     openDialog() {
       this.dialog = true;
     },
-    async save() {
+    save() {
       this.saving = true;
       this.consumable_purchase.consumable_id = this.$route.params.id;
-      await this.errorHandler(postConsumablePurchase(this.consumable_purchase));
-      this.$emit("getConsumable");
-      this.saving = false;
-      this.dialog = false;
+      this.errorHandler(postConsumablePurchase(this.consumable_purchase))
+        .then(() => {
+          this.$emit("getConsumable");
+          this.dialog = false;
+        })
+        .finally(() => {
+          this.saving = false;
+        });
     },
   },
 };

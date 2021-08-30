@@ -68,6 +68,7 @@
                   <v-text-field
                     v-model="subscription.end_time"
                     label="到期时间*"
+                    :rules="[(v) => !!v || '到期时间是必要的']"
                     readonly
                     v-bind="attrs"
                     v-on="on"
@@ -100,13 +101,20 @@
           </v-row>
           <v-row>
             <v-col cols="12" sm="12" md="12">
-              <v-textarea label="描述" v-model="subscription.description" required></v-textarea>
+              <v-textarea label="描述" v-model="subscription.description"></v-textarea>
             </v-col>
           </v-row>
         </v-form>
 
         <v-card-actions>
-          <v-btn color="primary" :loading="loading" :disabled="disabled" block dark @click="save">
+          <v-btn
+            color="primary"
+            :loading="loading"
+            :disabled="!valid || disabled"
+            block
+            dark
+            @click="save"
+          >
             保存
           </v-btn>
         </v-card-actions>
@@ -147,13 +155,20 @@ export default {
     this.hidden = false;
   },
   methods: {
-    async save() {
+    save() {
       this.loading = true;
       this.disabled = true;
-      await this.errorHandler(postSubscription(this.subscription));
-      this.$store.dispatch("getSubscriptions");
-      this.loading = false;
-      this.alert = true;
+      this.errorHandler(postSubscription(this.subscription))
+        .then(() => {
+          this.$store.dispatch("getSubscriptions");
+          this.alert = true;
+        })
+        .catch(() => {
+          this.disabled = false;
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     continueNew() {
       this.alert = false;

@@ -47,7 +47,6 @@
                   <v-textarea
                     label="描述"
                     v-model="consumable_application.description"
-                    required
                   ></v-textarea>
                 </v-col>
               </v-row>
@@ -103,13 +102,17 @@ export default {
       this.loading = false;
       this.dialog = true;
     },
-    async save() {
+    save() {
       this.saving = true;
       this.consumable_application.consumable_id = this.$route.params.id;
-      await this.errorHandler(postConsumableApplication(this.consumable_application));
-      this.$emit("getConsumable");
-      this.saving = false;
-      this.dialog = false;
+      this.errorHandler(postConsumableApplication(this.consumable_application))
+        .then(() => {
+          this.$emit("getConsumable");
+          this.dialog = false;
+        })
+        .finally(() => {
+          this.saving = false;
+        });
     },
   },
 };

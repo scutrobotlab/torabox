@@ -17,7 +17,7 @@
           <UserProfileList :user="user" />
         </v-card-text>
         <v-card-actions>
-          <v-btn block color="primary" :loading="loading" :disabled="loading" @click="updateUser">
+          <v-btn block color="primary" :loading="updating" :disabled="updating" @click="updateUser">
             <v-icon left dark> mdi-autorenew </v-icon>从统一认证同步信息
           </v-btn>
         </v-card-actions>
@@ -71,6 +71,7 @@ export default {
   data: () => ({
     snackbar: false,
     loading: true,
+    updating: false,
     notification_count: null,
   }),
   computed: {
@@ -88,11 +89,15 @@ export default {
     this.loading = false;
   },
   methods: {
-    async updateUser() {
-      this.loading = true;
-      await this.$store.dispatch("updateUser");
-      this.snackbar = true;
-      this.loading = false;
+    updateUser() {
+      this.updating = true;
+      this.errorHandler(this.$store.dispatch("updateUser"))
+        .then(() => {
+          this.snackbar = true;
+        })
+        .finally(() => {
+          this.updating = false;
+        });
     },
   },
 };

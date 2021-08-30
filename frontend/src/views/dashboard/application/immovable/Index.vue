@@ -125,14 +125,18 @@ export default {
     },
     async updateImmovableApplication(status) {
       this.updating = true;
-      await this.errorHandler(
+      this.errorHandler(
         putImmovableApplication(this.$route.params.id, {
           status,
           description: this.immovable_application.description,
         })
-      );
-      await this.getImmovableApplication();
-      this.updating = false;
+      )
+        .then(async () => {
+          await this.getImmovableApplication();
+        })
+        .finally(() => {
+          this.updating = false;
+        });
     },
   },
 };

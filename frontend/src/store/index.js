@@ -95,10 +95,9 @@ export default new Vuex.Store({
         commit("setUser", resp);
       });
     },
-    updateUser({ commit }) {
-      putUserSelf().then((resp) => {
-        commit("setUser", resp);
-      });
+    async updateUser({ commit }) {
+      const resp = await putUserSelf();
+      commit("setUser", resp);
     },
     deleteUser({ commit }) {
       deleteUserSelfSession().then(() => {

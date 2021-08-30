@@ -88,11 +88,9 @@ export default {
     },
   },
   async created() {
-    Promise.all([
-      this.$store.dispatch("getImmovables"),
-      this.$store.dispatch("getConsumables"),
-      this.$store.dispatch("getSubscriptions"),
-    ]);
+    this.$store.dispatch("getImmovables");
+    this.$store.dispatch("getConsumables");
+    this.$store.dispatch("getSubscriptions");
   },
 };
 </script>

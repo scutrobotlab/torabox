@@ -67,7 +67,7 @@ export default {
     this.loading = false;
   },
   methods: {
-    async login() {
+    login() {
       const url = createUserOAuthURL(this.config, this.$route.query.redirect);
       document.location.replace(url);
     },

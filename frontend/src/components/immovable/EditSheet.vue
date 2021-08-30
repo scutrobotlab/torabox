@@ -38,13 +38,20 @@
           </v-row>
           <v-row>
             <v-col cols="12" sm="12" md="12">
-              <v-textarea label="描述" v-model="immovable.description" required></v-textarea>
+              <v-textarea label="描述" v-model="immovable.description"></v-textarea>
             </v-col>
           </v-row>
         </v-form>
 
         <v-card-actions>
-          <v-btn color="primary" :loading="loading" :disabled="disabled" block dark @click="save">
+          <v-btn
+            color="primary"
+            :loading="loading"
+            :disabled="!valid || disabled"
+            block
+            dark
+            @click="save"
+          >
             保存
           </v-btn>
         </v-card-actions>
@@ -78,14 +85,18 @@ export default {
     },
   },
   methods: {
-    async save() {
+    save() {
       this.loading = true;
       this.disabled = true;
-      await this.errorHandler(putImmovable(this.immovable.id, this.immovable));
-      this.$emit("getImmovable");
-      this.loading = false;
-      this.disabled = false;
-      this.sheet = false;
+      this.errorHandler(putImmovable(this.immovable.id, this.immovable))
+        .then(() => {
+          this.$emit("getImmovable");
+          this.sheet = false;
+        })
+        .finally(() => {
+          this.loading = false;
+          this.disabled = false;
+        });
     },
     openSheet() {
       this.immovable = this.data;

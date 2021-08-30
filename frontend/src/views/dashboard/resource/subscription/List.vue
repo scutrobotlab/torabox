@@ -27,8 +27,8 @@ export default {
   data: () => ({
     loading: true,
   }),
-  async created() {
-    await this.$store.dispatch("getSubscriptions");
+  created() {
+    this.$store.dispatch("getSubscriptions");
   },
   mounted() {
     this.loading = false;

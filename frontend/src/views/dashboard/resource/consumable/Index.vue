@@ -161,9 +161,9 @@ export default {
     consumable: null,
     qrcodeContent: "",
   }),
-  async created() {
+  created() {
     this.loading = true;
-    await Promise.all([this.checkAccess(), this.getConsumable()]).finally(() => {
+    this.errorHandler(Promise.all([this.checkAccess(), this.getConsumable()])).finally(() => {
       this.loading = false;
     });
     this.qrcodeContent = window.location.origin + "/consumable/" + this.consumable.uuid;
@@ -186,13 +186,19 @@ export default {
     async getConsumable() {
       this.consumable = await this.errorHandler(getConsumableIndex(this.$route.params.id));
     },
-    async remove() {
+    remove() {
       this.removing = true;
-      await this.errorHandler(deleteConsumable(this.$route.params.id));
-      await this.$store.dispatch("getConsumables");
-      this.dialog = false;
-      this.removing = false;
-      this.$router.push("/dashboard/resource/consumable");
+      this.errorHandler(deleteConsumable(this.$route.params.id))
+        .then(() => {
+          this.$store.dispatch("getConsumables");
+          this.dialog = false;
+          this.removing = false;
+          this.$router.push("/dashboard/resource/consumable");
+        })
+        .catch(() => {
+          this.dialog = false;
+          this.removing = false;
+        });
     },
   },
 };

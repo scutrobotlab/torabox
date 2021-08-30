@@ -28,11 +28,7 @@
               </v-row>
               <v-row>
                 <v-col cols="12" sm="12" md="12">
-                  <v-textarea
-                    label="描述"
-                    v-model="immovable_application.description"
-                    required
-                  ></v-textarea>
+                  <v-textarea label="描述" v-model="immovable_application.description"></v-textarea>
                 </v-col>
               </v-row>
             </v-form>
@@ -87,13 +83,17 @@ export default {
       this.loading = false;
       this.dialog = true;
     },
-    async save() {
+    save() {
       this.saving = true;
       this.immovable_application.immovable_id = this.$route.params.id;
-      await this.errorHandler(postImmovableApplication(this.immovable_application));
-      this.$emit("getImmovable");
-      this.saving = false;
-      this.dialog = false;
+      this.errorHandler(postImmovableApplication(this.immovable_application))
+        .then(() => {
+          this.$emit("getImmovable");
+          this.dialog = false;
+        })
+        .finally(() => {
+          this.saving = false;
+        });
     },
   },
 };

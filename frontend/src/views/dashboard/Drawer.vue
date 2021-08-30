@@ -73,7 +73,8 @@ export default {
     subRoutes: null,
   }),
   async created() {
-    Promise.all([this.$store.dispatch("getUser"), this.$store.dispatch("getGroups")]);
+    this.$store.dispatch("getUser");
+    this.$store.dispatch("getGroups");
     this.getSubRoutes();
   },
   computed: {
@@ -94,9 +95,9 @@ export default {
     },
   },
   methods: {
-    async logout() {
+    logout() {
       this.loading = true;
-      await this.$store.dispatch("deleteUser");
+      this.$store.dispatch("deleteUser");
     },
     getSubRoutes() {
       const p = this.$router.currentRoute.matched[1].path;

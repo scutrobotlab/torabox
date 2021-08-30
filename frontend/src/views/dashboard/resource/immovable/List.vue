@@ -58,7 +58,8 @@ export default {
     loading: true,
   }),
   async created() {
-    Promise.all([this.$store.dispatch("getImmovables"), this.$store.dispatch("getKinds")]);
+    this.$store.dispatch("getImmovables");
+    this.$store.dispatch("getKinds");
   },
   mounted() {
     this.loading = false;
