@@ -10,7 +10,7 @@ export default new Vuetify({
       light: {
         primary: colors.orange.lighten2,
         secondary: colors.blue.lighten1,
-        accent: colors.pink.accent2,
+        accent: colors.indigo.accent2,
       },
       dark: {
         primary: colors.purple.lighten1,
