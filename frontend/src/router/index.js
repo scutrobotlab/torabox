@@ -68,7 +68,43 @@ const routes = [
         children: [
           {
             path: "",
-            redirect: "immovable",
+            redirect: "immovable_kind",
+          },
+          {
+            path: "immovable_kind",
+            component: () =>
+              import(
+                /* webpackChunkName: "dashboard-resource-immovable-kindmain" */
+                "@/views/dashboard/resource/immovable/KindMain.vue"
+              ),
+            meta: {
+              title: "不动产分类",
+              icon: "mdi-diamond-stone",
+            },
+            children: [
+              {
+                path: "",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-resource-immovable-kindlist" */
+                    "@/views/dashboard/resource/immovable/KindList.vue"
+                  ),
+                meta: {
+                  title: "不动产分类",
+                },
+              },
+              {
+                path: ":id",
+                component: () =>
+                  import(
+                    /* webpackChunkName: "dashboard-resource-immovable-kindindex" */
+                    "@/views/dashboard/resource/immovable/KindIndex.vue"
+                  ),
+                meta: {
+                  title: "不动产分类详情",
+                },
+              },
+            ],
           },
           {
             path: "immovable",
@@ -77,10 +113,7 @@ const routes = [
                 /* webpackChunkName: "dashboard-resource-immovable-main" */
                 "@/views/dashboard/resource/immovable/Main.vue"
               ),
-            meta: {
-              title: "不动产",
-              icon: "mdi-diamond-stone",
-            },
+
             children: [
               {
                 path: "",
