@@ -29,6 +29,6 @@ class ImmovableKind extends Model
 
     public function immovables()
     {
-        return $this->hasMany(Immovable::class);
+        return $this->hasMany(Immovable::class)->with('user');
     }
 }

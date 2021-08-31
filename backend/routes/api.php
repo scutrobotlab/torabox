@@ -80,6 +80,7 @@ Route::middleware(UserMid::class)->group(function () {
         Route::get('/', [ImmovableKindController::class, 'list']);
         Route::middleware(EnsureUserInGroup::class)->group(function () {
             Route::post('/', [ImmovableKindController::class, 'store']);
+            Route::put('/{id}', [ImmovableKindController::class, 'update']);
         });
         Route::prefix('/{id}')->group(function () {
             Route::get('/', [ImmovableKindController::class, 'index']);

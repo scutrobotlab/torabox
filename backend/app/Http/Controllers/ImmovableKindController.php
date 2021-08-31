@@ -39,7 +39,7 @@ class ImmovableKindController extends Controller
     public function indexImmovableList($id)
     {
         return response()->json([
-            'immovables' => ImmovableKind::findOrFail($id)->immovables,
+            'immovables' => ImmovableKind::findOrFail($id)->immovables()->get(),
         ]);
     }
 
@@ -49,6 +49,19 @@ class ImmovableKindController extends Controller
 
         return response()->json([
             'access' => UserMid::$user->isGroupLeader($immovable_kind->group_id),
+        ]);
+    }
+
+    public function update($id, ImmovableKindForm $request)
+    {
+        $immovable_kind = ImmovableKind::findOrFail($id);
+        $immovable_kind->group_id = $request->group_id;
+        $immovable_kind->name = $request->name;
+        $immovable_kind->description = $request->description;
+        $immovable_kind->save();
+
+        return response()->json([
+            'immovable_kind' => $immovable_kind,
         ]);
     }
 
