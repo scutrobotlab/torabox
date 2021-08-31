@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" transition="dialog-bottom-transition" max-width="350">
+  <v-dialog v-model="dialog" max-width="350">
     <v-card>
       <v-toolbar dense>
         <v-spacer />
