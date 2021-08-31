@@ -30,5 +30,14 @@ export async function postImmovableKind(immovable_kind) {
     group_id: immovable_kind.group_id,
     description: immovable_kind.description,
   });
-  return resp.immovable;
+  return resp.immovable_kind;
+}
+
+export async function putImmovableKind(id, immovable_kind) {
+  const resp = await fetchApi("/api/immovable_kinds/" + id, "PUT", {
+    name: immovable_kind.name,
+    group_id: immovable_kind.group_id,
+    description: immovable_kind.description,
+  });
+  return resp.immovable_kind;
 }
