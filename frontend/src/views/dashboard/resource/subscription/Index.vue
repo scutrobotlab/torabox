@@ -35,25 +35,53 @@
         <WaitProgress v-if="loading" class="ma-7" />
 
         <v-list v-else>
-          <v-subheader>基本信息</v-subheader>
           <v-list-item>
+            <v-list-item-avatar>
+              <v-icon> mdi-clock</v-icon>
+            </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>到期时间：{{ subscription.end_time }}</v-list-item-title>
+              <v-list-item-subtitle>到期时间</v-list-item-subtitle>
+              <v-list-item-title>{{ subscription.end_time }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
+            <v-list-item-avatar>
+              <v-icon> mdi-account</v-icon>
+            </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>负责人：{{ subscription.user.name }}</v-list-item-title>
+              <v-list-item-subtitle>负责人</v-list-item-subtitle>
+              <v-list-item-title>{{ subscription.user.name }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
+            <v-list-item-avatar>
+              <v-icon> mdi-account-multiple</v-icon>
+            </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>归属：{{ subscription.group.name }}</v-list-item-title>
+              <v-list-item-subtitle>归属</v-list-item-subtitle>
+              <v-list-item-title>{{ subscription.group.name }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
+            <v-list-item-avatar>
+              <v-icon> mdi-text-box</v-icon>
+            </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>描述：{{ subscription.description }}</v-list-item-title>
+              <v-list-item-subtitle>描述</v-list-item-subtitle>
+              <v-list-item-title>{{ subscription.description }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-avatar>
+              <v-icon> mdi-history</v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-subtitle>
+                入库于 {{ format(subscription.created_at) }}
+              </v-list-item-subtitle>
+              <v-list-item-subtitle>
+                修改于 {{ format(subscription.updated_at) }}
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -93,6 +121,7 @@
 </template>
 
 <script>
+import { format } from "@/utils/moment";
 import WaitProgress from "@/components/WaitProgress.vue";
 import EditSheet from "@/components/subscription/EditSheet.vue";
 import errorMixin from "@/mixins/errorMixin.js";
@@ -134,6 +163,7 @@ export default {
     },
   },
   methods: {
+    format,
     async checkAccess() {
       this.access = await this.errorHandler(getSubscriptionIndexEdit(this.$route.params.id));
     },
@@ -158,4 +188,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.v-list-item__title {
+  white-space: pre-line;
+  height: fit-content;
+}
+</style>

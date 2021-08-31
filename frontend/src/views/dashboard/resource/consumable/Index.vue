@@ -51,32 +51,73 @@
         <WaitProgress v-if="loading" class="ma-7" />
 
         <v-list v-else>
-          <v-subheader>基本信息</v-subheader>
           <v-list-item>
+            <v-list-item-avatar>
+              <v-icon> mdi-all-inclusive</v-icon>
+            </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>
-                {{ consumable.need_approval ? "需要审批" : "无需审批" }}
-              </v-list-item-title>
+              <v-list-item-subtitle>剩余数量</v-list-item-subtitle>
+              <v-list-item-title>{{ consumable.number }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item v-if="consumable.need_approval">
+            <v-list-item-avatar>
+              <v-icon> mdi-lock </v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-subtitle>申请规则</v-list-item-subtitle>
+              <v-list-item-title>需要审批</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item v-else>
+            <v-list-item-avatar>
+              <v-icon>mdi-lock-open-variant</v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-subtitle>申请规则</v-list-item-subtitle>
+              <v-list-item-title>无需审批</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-avatar>
+              <v-icon> mdi-account</v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-subtitle>负责人</v-list-item-subtitle>
+              <v-list-item-title>{{ consumable.user.name }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
+            <v-list-item-avatar>
+              <v-icon> mdi-account-multiple</v-icon>
+            </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>剩余数量：{{ consumable.number }}</v-list-item-title>
+              <v-list-item-subtitle>归属</v-list-item-subtitle>
+              <v-list-item-title>{{ consumable.group.name }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
+            <v-list-item-avatar>
+              <v-icon> mdi-text-box</v-icon>
+            </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>负责人：{{ consumable.user.name }}</v-list-item-title>
+              <v-list-item-subtitle>描述</v-list-item-subtitle>
+              <v-list-item-title>{{ consumable.description }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
+            <v-list-item-avatar>
+              <v-icon> mdi-history</v-icon>
+            </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>归属：{{ consumable.group.name }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>描述：{{ consumable.description }}</v-list-item-title>
+              <v-list-item-subtitle>
+                入库于 {{ format(consumable.created_at) }}
+              </v-list-item-subtitle>
+              <v-list-item-subtitle>
+                修改于 {{ format(consumable.updated_at) }}
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -135,6 +176,7 @@
 </template>
 
 <script>
+import { format } from "@/utils/moment";
 import WaitProgress from "@/components/WaitProgress.vue";
 import QrcodeDialog from "@/components/QrcodeDialog.vue";
 import ApplicationDialog from "@/components/consumable/ApplicationDialog.vue";
@@ -180,6 +222,7 @@ export default {
     },
   },
   methods: {
+    format,
     async checkAccess() {
       this.access = await this.errorHandler(getConsumableIndexEdit(this.$route.params.id));
     },
@@ -204,4 +247,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.v-list-item__title {
+  white-space: pre-line;
+  height: fit-content;
+}
+</style>

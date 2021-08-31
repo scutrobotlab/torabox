@@ -63,37 +63,85 @@
         <WaitProgress v-if="loading" class="ma-7" />
 
         <v-list v-else>
-          <v-subheader>基本信息</v-subheader>
           <v-list-item>
+            <v-list-item-avatar>
+              <v-icon v-if="immovable.status == 0"> mdi-check-circle-outline </v-icon>
+              <v-icon v-else-if="immovable.status == -1"> mdi-close-circle-outline</v-icon>
+              <v-icon v-else-if="immovable.status == 1"> mdi-alert-circle-outline </v-icon>
+              <v-icon v-else>mdi-help-circle-outline</v-icon>
+            </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>
-                {{ immovable.need_approval ? "需要审批" : "无需审批" }}
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
+              <v-list-item-subtitle>当前状态</v-list-item-subtitle>
               <v-list-item-title>{{ immovable.status_text }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item>
+
+          <v-list-item v-if="immovable.need_approval">
+            <v-list-item-avatar>
+              <v-icon> mdi-lock </v-icon>
+            </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>负责人：{{ immovable.user.name }}</v-list-item-title>
+              <v-list-item-subtitle>申请规则</v-list-item-subtitle>
+              <v-list-item-title>需要审批</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item v-else>
+            <v-list-item-avatar>
+              <v-icon>mdi-lock-open-variant</v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-subtitle>申请规则</v-list-item-subtitle>
+              <v-list-item-title>无需审批</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-avatar>
+              <v-icon> mdi-tag</v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-subtitle>类别</v-list-item-subtitle>
+              <v-list-item-title>{{ immovable.kind.name }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
+            <v-list-item-avatar>
+              <v-icon> mdi-account</v-icon>
+            </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>类别：{{ immovable.kind.name }}</v-list-item-title>
+              <v-list-item-subtitle>负责人</v-list-item-subtitle>
+              <v-list-item-title>{{ immovable.user.name }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
+            <v-list-item-avatar>
+              <v-icon> mdi-account-multiple</v-icon>
+            </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>归属：{{ immovable.group.name }}</v-list-item-title>
+              <v-list-item-subtitle>归属</v-list-item-subtitle>
+              <v-list-item-title>{{ immovable.group.name }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
+            <v-list-item-avatar>
+              <v-icon> mdi-text-box</v-icon>
+            </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>描述：{{ immovable.description }}</v-list-item-title>
+              <v-list-item-subtitle>描述</v-list-item-subtitle>
+              <v-list-item-title>{{ immovable.description }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-avatar>
+              <v-icon> mdi-history</v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-subtitle>
+                入库于 {{ format(immovable.created_at) }}
+              </v-list-item-subtitle>
+              <v-list-item-subtitle>
+                修改于 {{ format(immovable.updated_at) }}
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -143,6 +191,7 @@
 </template>
 
 <script>
+import { format } from "@/utils/moment";
 import WaitProgress from "@/components/WaitProgress.vue";
 import QrcodeDialog from "@/components/QrcodeDialog.vue";
 import ApplicationDialog from "@/components/immovable/ApplicationDialog.vue";
@@ -186,6 +235,7 @@ export default {
     },
   },
   methods: {
+    format,
     async checkAccess() {
       this.access = await this.errorHandler(getImmovableIndexEdit(this.$route.params.id));
     },
@@ -210,4 +260,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.v-list-item__title {
+  white-space: pre-line;
+  height: fit-content;
+}
+</style>
