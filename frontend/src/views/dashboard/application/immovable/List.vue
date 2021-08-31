@@ -28,11 +28,25 @@ export default {
     ApplicationList,
   },
   data: () => ({
-    page: 1,
     length: 0,
     loading: true,
     applications: null,
   }),
+  computed: {
+    page: {
+      get() {
+        return Number(this.$route.query.p) || 1;
+      },
+      set(value) {
+        this.$router.replace({
+          query: {
+            ...this.$route.query,
+            p: value,
+          },
+        });
+      },
+    },
+  },
   watch: {
     async page() {
       await this.getApplications();
