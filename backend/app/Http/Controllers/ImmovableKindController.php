@@ -55,6 +55,12 @@ class ImmovableKindController extends Controller
     public function update($id, ImmovableKindForm $request)
     {
         $immovable_kind = ImmovableKind::findOrFail($id);
+        if (!UserMid::$user->isGroupLeader($immovable_kind->group_id)) {
+            return response()->json([
+                'message' => '需要本组组长执行操作',
+            ], 403);
+        }
+
         $immovable_kind->group_id = $request->group_id;
         $immovable_kind->name = $request->name;
         $immovable_kind->description = $request->description;
